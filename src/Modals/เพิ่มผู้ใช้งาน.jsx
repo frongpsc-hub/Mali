@@ -41,11 +41,19 @@ class Adduser extends Component {
     super()
 
     this.state = {
+      position :'A',
       showModal:false,
+      
     }
+    this.onChange=this.onChange.bind(this)
     this.handleClickOpen=this.handleClickOpen.bind(this)
     this.handleClickClose=this.handleClickClose.bind(this)
   }
+    onChange(event){
+    this.setState({
+      position : event.target.value
+    })
+    }
     handleClickOpen = () =>{
       this.setState({
         showModal:true
@@ -72,6 +80,194 @@ class Adduser extends Component {
         </MuiDialogTitle>
       );
     });
+
+    const position = this.state.position;
+    let form;
+    if (position == 'A')
+    {
+      form =
+      <div>
+      <div >
+      <Row>
+          
+        <Col className="pr-1" md="6">
+          <FormGroup>
+            <label>ชื่อ</label>
+            <Input
+              defaultValue=""
+              placeholder="ชื่อ"
+              type="text"
+            />
+          </FormGroup>
+        </Col>
+        <Col className="pl-1" md="6">
+          <FormGroup>
+            <label>นามสกุล</label>
+            <Input
+              defaultValue=""
+              placeholder="นามสกุล"
+              type="text"
+            />
+          </FormGroup>
+        </Col>
+      </Row> 
+      </div>
+      <div>
+      <Row>
+        <Col className="pr-1" md="6">
+          <FormGroup>
+            <label>เบอร์โทร</label>
+            <Input
+              defaultValue=""
+              placeholder="เบอร์โทร"
+              type="text"
+            />
+          </FormGroup>
+        </Col>
+        <Col className="pl-1" md="6">
+          <FormGroup>
+            <label>อีเมล</label>
+            <Input
+              defaultValue=""
+              placeholder="อีเมล"
+              type="text"
+            />
+          </FormGroup>
+        </Col>
+        
+      </Row>
+      <Row>
+        <Col className="pr-1" md="6">
+          <FormGroup>
+            <label>รหัสผ่าน</label>
+            <Input
+            type="password"
+              defaultValue=""
+              placeholder="รหัสผ่าน"
+              
+            />
+          </FormGroup>
+        </Col>
+        <Col className="pl-1" md="6">
+          <FormGroup>
+            <label>ยืนยันรหัสผ่าน</label>
+            <Input
+            type="password"
+              defaultValue=""
+              placeholder="ยืนยันรหัสผ่าน"
+              
+            />
+          </FormGroup>
+        </Col>
+        
+      </Row>
+      </div>
+      </div>
+    }
+    else{
+      form =
+      <div>
+      <div >
+      <Row>
+          
+        <Col className="pr-1" md="6">
+          <FormGroup>
+            <label>ชื่อ</label>
+            <Input
+              defaultValue=""
+              placeholder="ชื่อ"
+              type="text"
+            />
+          </FormGroup>
+        </Col>
+        <Col className="pl-1" md="6">
+          <FormGroup>
+            <label>นามสกุล</label>
+            <Input
+              defaultValue=""
+              placeholder="นามสกุล"
+              type="text"
+            />
+          </FormGroup>
+        </Col>
+      </Row> 
+      </div>
+      <div>
+      <Row>
+        <Col className="pr-1" md="6">
+          <FormGroup>
+            <label>เบอร์โทร</label>
+            <Input
+              defaultValue=""
+              placeholder="เบอร์โทร"
+              type="text"
+            />
+          </FormGroup>
+        </Col>
+        <Col className="pl-1" md="6">
+          <FormGroup>
+            <label>อีเมล</label>
+            <Input
+              defaultValue=""
+              placeholder="อีเมล"
+              type="text"
+            />
+          </FormGroup>
+        </Col>
+        
+      </Row>
+      <Row>
+        <Col className="pr-1" md="6">
+          <FormGroup>
+            <label>สำนักงาน ธ.ก.ส.</label>
+            <Input type="select" name="select" id="exampleSelect" >
+                <option value=''></option>
+                <option value=''></option>
+                <option value=''></option>        
+            </Input>
+          </FormGroup>
+        </Col>
+        <Col className="pl-1" md="6">
+          <FormGroup>
+            <label>สาขา ธ.ก.ส.</label>
+            <Input type="select" name="select" id="exampleSelect" >
+                <option value=''></option>
+                <option value=''></option>
+                <option value=''></option>        
+            </Input>
+          </FormGroup>
+        </Col>
+        
+      </Row>
+      <Row>
+        <Col className="pr-1" md="6">
+          <FormGroup>
+            <label>รหัสผ่าน</label>
+            <Input
+            type="password"
+              defaultValue=""
+              placeholder="รหัสผ่าน"
+              
+            />
+          </FormGroup>
+        </Col>
+        <Col className="pl-1" md="6">
+          <FormGroup>
+            <label>ยืนยันรหัสผ่าน</label>
+            <Input
+            type="password"
+              defaultValue=""
+              placeholder="ยืนยันรหัสผ่าน"
+              
+            />
+          </FormGroup>
+        </Col>
+        
+      </Row>
+      </div>
+      </div>
+    }
+
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
@@ -132,90 +328,18 @@ class Adduser extends Component {
                       <Col className="pr-1" md="6">
                         <FormGroup>
                           <label>สิทธิ์ผู้ใช้งาน</label>
-                          <Input type="select" name="select" id="exampleSelect">
+                          <Input type="select" name="select" id="exampleSelect" onChange={this.onChange} >
                             <option value='A'>ผู้ดูแลระบบ</option>
                             <option value='B'>เจ้าหน้าที่</option>
-                            <option value='C'>ผู้ใช้งานทั่วไป</option>
+                            <option value='A'>ผู้ใช้งานทั่วไป</option>
                             
                         </Input>
                         </FormGroup>
                       </Col>
                       
                     </Row>
-                    <div class="invisible">
-                    <Row>
-                        
-                      <Col className="pr-1" md="6">
-                        <FormGroup>
-                          <label>ชื่อ</label>
-                          <Input
-                            defaultValue=""
-                            placeholder="ชื่อ"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="6">
-                        <FormGroup>
-                          <label>นามสกุล</label>
-                          <Input
-                            defaultValue=""
-                            placeholder="นามสกุล"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row> 
-                    ...</div>
-                    <Row>
-                      <Col className="pr-1" md="6">
-                        <FormGroup>
-                          <label>เบอร์โทร</label>
-                          <Input
-                            defaultValue=""
-                            placeholder="เบอร์โทร"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="6">
-                        <FormGroup>
-                          <label>อีเมล</label>
-                          <Input
-                            defaultValue=""
-                            placeholder="อีเมล"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      
-                    </Row>
-                    <Row>
-                      <Col className="pr-1" md="6">
-                        <FormGroup>
-                          <label>รหัสผ่าน</label>
-                          <Input
-                          type="password"
-                            defaultValue=""
-                            placeholder="รหัสผ่าน"
-                            
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="6">
-                        <FormGroup>
-                          <label>ยืนยันรหัสผ่าน</label>
-                          <Input
-                          type="password"
-                            defaultValue=""
-                            placeholder="ยืนยันรหัสผ่าน"
-                            
-                          />
-                        </FormGroup>
-                      </Col>
-                      
-                    </Row>
                     
+                    {form}
                    
                   </Form>
                 </CardBody>
