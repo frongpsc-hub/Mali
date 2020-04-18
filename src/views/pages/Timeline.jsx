@@ -31,7 +31,7 @@ import { Tab } from "semantic-ui-react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import Adduser from "Modals/เพิ่มผู้ใช้งาน.jsx"
-
+import Viewuser from "Modals/ดูข้อมูลผู้ใช้งาน.jsx"
 import ToolkitProvider, {
   Search,
   CSVExport,
@@ -223,7 +223,7 @@ export default class RegularTables extends React.Component {
         email: "suthep@hotmail.com",
         position: "ผู้ดูแลระบบ",
         status: "เปิดใช้งาน",
-        manageuser: <Appuserinfo/>,
+        manageuser: <Viewuser/>,
       },
       {
         id: 4,
@@ -233,7 +233,7 @@ export default class RegularTables extends React.Component {
         position: "ผู้ดูแลระบบ",
         status: "เปิดใช้งาน",
         manageuser: (
-          <Appuserinfo/>
+          <Viewuser/>
         ),
       },
       {
@@ -244,9 +244,7 @@ export default class RegularTables extends React.Component {
         position: "ผู้ดูแลระบบ",
         status: "เปิดใช้งาน",
         manageuser: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
+          <Viewuser/>
         ),
       },
       {
@@ -501,6 +499,9 @@ export default class RegularTables extends React.Component {
         editable: false,
         align :'center',
         headerAlign :'center',
+        headerStyle:{
+          width : 120
+        }
       },
       {
         dataField: "status",
@@ -508,6 +509,9 @@ export default class RegularTables extends React.Component {
         text: "สถานะ",
         align :'center',
         headerAlign :'center',
+        headerStyle:{
+          width : 120
+        },
         editor: {
           type: Type.SELECT,
           options: [

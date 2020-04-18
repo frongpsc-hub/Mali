@@ -74,7 +74,7 @@ class Appuserinfo extends Component {
     });
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+      <Button size="sm" variant="outlined" color="primary" onClick={this.handleClickOpen}>
         เรียกดูข้อมูล
       </Button>
       <Dialog 

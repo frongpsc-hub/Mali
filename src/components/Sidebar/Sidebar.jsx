@@ -21,7 +21,9 @@ import { Nav, Collapse } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 
 import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
-import logo from "assets/img/react-logo.png";
+import logo from "assets/img/Artboard 17.png";
+import logo2 from "assets/img/Artboard 15.png";
+
 
 var ps;
 
@@ -154,18 +156,20 @@ class Sidebar extends React.Component {
       >
         <div className="logo">
           <a
-            href="https://www.creative-tim.com"
+            
             className="simple-text logo-mini"
           >
             <div className="logo-img">
-              <img src={logo} alt="react-logo" />
+              <img src={logo}  />
             </div>
           </a>
           <a
             href="https://www.creative-tim.com"
             className="simple-text logo-normal"
           >
-            มะลิซ้อน
+           <div >
+              <img src={logo2} alt="react-logo" width="120" height="auto"/>
+            </div>
           </a>
         </div>
 

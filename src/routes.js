@@ -54,6 +54,9 @@ const routes = [
     name: "การจัดการผู้ใช้งาน",
     icon: "nc-icon nc-badge",
     state: "pagesCollapse",
+    path: "/timeline",
+    component: Timeline,
+    layout: "/admin",
     views: [
       {
         path: "/timeline",

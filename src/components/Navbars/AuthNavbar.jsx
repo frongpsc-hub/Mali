@@ -62,7 +62,7 @@ class AuthNavbar extends React.Component {
         <Container>
           <div className="navbar-wrapper">
             <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
-              Paper Dashboard PRO React
+            มะลิซ้อน TGIA X FARMFEED
             </NavbarBrand>
           </div>
           <button

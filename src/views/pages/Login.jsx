@@ -15,7 +15,7 @@
 
 */
 import React from "react";
-
+import logo from "assets/img/Artboard 15.png";
 // reactstrap components
 import {
   Button,
@@ -52,7 +52,7 @@ class Login extends React.Component {
                 <Card className="card-login">
                   <CardHeader>
                     <CardHeader>
-                      <h3 className="header text-center">Login</h3>
+                    <img src={logo} alt="react-logo" width="auto" height="auto"/>
                     </CardHeader>
                   </CardHeader>
                   <CardBody>
@@ -62,7 +62,7 @@ class Login extends React.Component {
                           <i className="nc-icon nc-single-02" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="First Name..." type="text" />
+                      <Input placeholder="Email" type="text" />
                     </InputGroup>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
@@ -86,7 +86,7 @@ class Login extends React.Component {
                             type="checkbox"
                           />
                           <span className="form-check-sign" />
-                          Subscribe to newsletter
+                          ลืมรหัสผ่าน
                         </Label>
                       </FormGroup>
                     </FormGroup>
@@ -95,11 +95,11 @@ class Login extends React.Component {
                     <Button
                       block
                       className="btn-round mb-3"
-                      color="warning"
+                      color="success"
                       href="#pablo"
                       onClick={e => e.preventDefault()}
                     >
-                      Get Started
+                      เข้าสู่ระบบ
                     </Button>
                   </CardFooter>
                 </Card>
