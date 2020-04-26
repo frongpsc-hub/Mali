@@ -187,13 +187,13 @@ class Sidebar extends React.Component {
                   this.setState({ openAvatar: !this.state.openAvatar })
                 }
               >
-                
+                <NavLink to="/admin/user-profile" activeClassName="">
                 <span>
                   ข้อมูลผู้ใช้งาน
-                  <b className="caret" />
                 </span>
+                </NavLink>
               </a>
-              <Collapse isOpen={this.state.openAvatar}>
+              {/*<Collapse isOpen={this.state.openAvatar}>
                 <ul className="nav">
                   <li>
                     <NavLink to="/admin/user-profile" activeClassName="">
@@ -214,7 +214,7 @@ class Sidebar extends React.Component {
                     </NavLink>
                   </li>
                 </ul>
-              </Collapse>
+              </Collapse>*/}
             </div>
           </div>
           <Nav>{this.createLinks(this.props.routes)}</Nav>

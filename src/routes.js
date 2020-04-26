@@ -14,6 +14,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import รายงาน from "views/pages/รายงาน.jsx"
+import คำถามที่พบบ่อย from "views/pages/คำถามที่พบบ่อย.jsx"
 import Buttons from "views/components/Buttons.jsx";
 //import Calendar from "views/Calendar.jsx";
 import Charts from "views/Charts.jsx";
@@ -97,7 +99,7 @@ const routes = [
   },
   {
     collapse: true,
-    name: "การยื่นขอความช่วยเหลือ",
+    name: "การแจ้งรายงานความเสียหาย",
     icon: "nc-icon nc-single-copy-04",
     state: "componentsCollapse",
     views: [
@@ -153,40 +155,14 @@ const routes = [
     ]
   },
   {
-    collapse: true,
+    
     name: "รายงาน",
+    path: "/รายงาน",
     icon: "nc-icon nc-chart-bar-32",
     state: "formsCollapse",
-    views: [
-      {
-        path: "/regular-forms",
-        name: "Regular Forms",
-        mini: "RF",
-        component: RegularForms,
-        layout: "/admin"
-      },
-      {
-        path: "/extended-forms",
-        name: "Extended Forms",
-        mini: "EF",
-        component: ExtendedForms,
-        layout: "/admin"
-      },
-      {
-        path: "/validation-forms",
-        name: "Validation Forms",
-        mini: "VF",
-        component: ValidationForms,
-        layout: "/admin"
-      },
-      {
-        path: "/wizard",
-        name: "Wizard",
-        mini: "W",
-        component: Wizard,
-        layout: "/admin"
-      }
-    ]
+    component: รายงาน,
+    layout: "/admin"
+   
   },
   {
     collapse: true,
@@ -217,12 +193,17 @@ const routes = [
       }
     ]
   },
+  
   {
-    collapse: true,
+    
+    //collapse: true,
+    path: "/google-maps",
+    layout: "/admin",
     name: "คำถามที่พบบ่อย",
     icon: "nc-icon nc-support-17",
     state: "mapsCollapse",
-    views: [
+    component: คำถามที่พบบ่อย
+    /*views: [
       {
         path: "/google-maps",
         name: "Google Maps",
@@ -244,7 +225,7 @@ const routes = [
         component: VectorMap,
         layout: "/admin"
       }
-    ]
+    ]*/
   },
   {
     path: "/widgets",

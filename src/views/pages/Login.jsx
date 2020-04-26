@@ -15,6 +15,7 @@
 
 */
 import React from "react";
+import { NavLink } from "react-router-dom";
 import logo from "assets/img/Artboard 15.png";
 // reactstrap components
 import {
@@ -76,20 +77,14 @@ class Login extends React.Component {
                         autoComplete="off"
                       />
                     </InputGroup>
-                    <br />
-                    <FormGroup>
-                      <FormGroup check>
-                        <Label check>
-                          <Input
-                            defaultChecked
-                            defaultValue=""
-                            type="checkbox"
-                          />
-                          <span className="form-check-sign" />
-                          ลืมรหัสผ่าน
-                        </Label>
-                      </FormGroup>
-                    </FormGroup>
+                   
+                   
+                          
+                          <NavLink to="/admin/user-profile" className="nav-link" >
+                           ลืมรหัสผ่าน?
+                          </NavLink>
+                          
+                        
                   </CardBody>
                   <CardFooter>
                     <Button

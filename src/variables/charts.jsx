@@ -899,24 +899,24 @@ const chartExample10 = {
 
 const chartExample11 = {
   data: {
-    labels: [1, 2, 3],
+    labels: ["ภาคเหนือ", "ภาคตะวันออกเฉียงเหนือ", "ภาคตะวันตก", "ภาคกลาง", "ภาคตะวันออก", "ภาคใต้"],
     datasets: [
       {
         label: "Emails",
         pointRadius: 0,
         pointHoverRadius: 0,
-        backgroundColor: ["#e3e3e3", "#4acccd", "#fcc468"],
+        backgroundColor: ["#e3e3e3", "#4acccd", "#fcc468","#555988","#888455","#885559"],
         borderWidth: 0,
-        data: [542, 480, 430]
+        data: [12,16,28,15,18,11]
       }
     ]
   },
   options: {
     legend: {
-      display: false
+      display: true
     },
     tooltips: {
-      enabled: false
+      enabled: true
     },
     scales: {
       yAxes: [

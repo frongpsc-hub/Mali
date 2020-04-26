@@ -83,6 +83,7 @@ class AuthNavbar extends React.Component {
             className="justify-content-end"
             navbar
           >
+            {/*  
             <Nav navbar>
               <NavItem>
                 <NavLink to="/admin/dashboard" className="nav-link">
@@ -114,10 +115,11 @@ class AuthNavbar extends React.Component {
                   Lock
                 </NavLink>
               </NavItem>
-            </Nav>
+            </Nav>*/}
           </Collapse>
         </Container>
       </Navbar>
+            
     );
   }
 }

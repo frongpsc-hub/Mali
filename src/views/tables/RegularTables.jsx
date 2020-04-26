@@ -699,7 +699,7 @@ export default class RegularTables extends React.Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h2">การยื่นขอความช่วยเหลือ</CardTitle>
+                  <CardTitle tag="h2">การแจ้งรายงานความเสียหาย</CardTitle>
                 </CardHeader>
                 <CardBody className="table-full-width table-hover">
                   <Tab panes={panes} />

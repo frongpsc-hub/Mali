@@ -61,7 +61,7 @@ export default class FormPropsTextFields extends Component {
       <Container maxWidth='xl'>
         <Row>
         <Col xl="6">
-        <h5>ข้อมูลผู้ส่งการยื่นขอความช่วยเหลือ</h5>
+        <h5>ข้อมูลผู้แจ้งรายงานความเสียหาย</h5>
         
       <FormGroup>
         <Label>เลขบัญชี</Label>

@@ -15,6 +15,17 @@
 
 */
 import React from "react";
+import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
+import { Tab } from "semantic-ui-react";
+
+import BootstrapTable from "react-bootstrap-table-next";
+import paginationFactory from "react-bootstrap-table2-paginator";
+import Adduser from "Modals/เพิ่มผู้ใช้งาน.jsx"
+import Viewuser from "Modals/ดูข้อมูลผู้ใช้งาน.jsx"
+import ToolkitProvider, {
+  Search,
+  CSVExport,
+} from "react-bootstrap-table2-toolkit";
 // react plugin used to create charts
 import { Line, Bar, Doughnut } from "react-chartjs-2";
 // react plugin for creating vector maps
@@ -40,30 +51,35 @@ import {
 } from "reactstrap";
 
 import {
-  chartExample1,
-  chartExample2,
+
   chartExample11,
-  chartExample4,
-  chartExample5,
-  chartExample6,
-  chartExample7,
-  chartExample8
+
 } from "variables/charts.jsx";
 
-var mapData = {
-  AU: 760,
-  BR: 550,
-  CA: 120,
-  DE: 1300,
-  FR: 540,
-  GB: 690,
-  GE: 200,
-  IN: 200,
-  RO: 600,
-  RU: 300,
-  US: 2920
-};
+const shownum = [
+    { value: 10, label: "10" },
+    { value: 50, label: "50" },
+    { value: 100, label: "100" },
+  ];
 
+const { ExportCSVButton } = CSVExport;
+state = {   
+    shownumOp: 10,
+    products: [
+      {
+        ภาค: "ภาคเหนือ",
+        จังหวัด: "ryuntp",
+        ประเภทภัย: "0873269511",
+        email: "ryu_r@hotmail.com",
+        totalfield: "3",
+        totalwarranty: "1",
+        details: 
+          
+        ,
+      },
+      
+    ],
+}
 class Dashboard extends React.Component {
   render() {
     return (
@@ -77,24 +93,19 @@ class Dashboard extends React.Component {
                   <Row>
                     <Col md="4" xs="5">
                       <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-single-02 text-primary" />
+                      <i className="nc-icon nc-paper text-primary" />
                       </div>
                     </Col>
                     <Col md="8" xs="7">
                       <div className="numbers">
-                        <p className="card-category" >ผู้ใช้งานทั้งหมด</p>
+                        <p className="card-category" >การแจ้งรายงานทั้งหมด</p>
                         <CardTitle tag="p">982</CardTitle>
                         <p />
                       </div>
                     </Col>
                   </Row>
                 </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <br></br>
-                  </div>
-                </CardFooter>
+                
               </Card>
             </Col>
             <Col lg="3" md="6" sm="6">
@@ -116,15 +127,7 @@ class Dashboard extends React.Component {
                     </Col>
                   </Row>
                 </CardBody>
-                <CardFooter>
-                  <hr />
-                  
-                  <div className="stats">
-                    
-                    รายงานทั้งหมด
-                  </div>
-                  
-                </CardFooter>
+                
               </Card>
             </Col>
             <Col lg="3" md="6" sm="6">
@@ -145,13 +148,7 @@ class Dashboard extends React.Component {
                     </Col>
                   </Row>
                 </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    
-                    รายงานทั้งหมด
-                  </div>
-                </CardFooter>
+                
               </Card>
             </Col>
             <Col lg="3" md="6" sm="6">
@@ -172,87 +169,13 @@ class Dashboard extends React.Component {
                     </Col>
                   </Row>
                 </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    
-                    รายงานทั้งหมด
-                  </div>
-                </CardFooter>
+              
+               
               </Card>
             </Col>
           </Row>
 
 
-          <Row>
-            <Col lg="6" sm="6">
-              <Card>
-              <CardHeader>
-                  
-                  </CardHeader>
-                <CardBody>
-                  <h6 className="big-title">
-                  สถิติจํานวนสมาชิกในแอปพลิเคชั่น
-                  </h6>
-                  <Line
-                    data={chartExample1.data}
-                    options={chartExample1.options}
-                    height={380}
-                    width={826}
-                  />
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <Row>
-                    <Col sm="7">
-                      <div className="numbers pull-left">$34,657</div>
-                    </Col>
-                    <Col sm="5">
-                      <div className="pull-right">
-                        <Badge color="success" pill>
-                          +18%
-                        </Badge>
-                      </div>
-                    </Col>
-                  </Row>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col lg="6" sm="6">
-              <Card>
-                <CardHeader>
-                  
-                </CardHeader>
-                <CardBody>
-                  <h6 className="big-title">
-                  สถิติการยื่นขอความช่วยเหลือทั้งหมด
-                  </h6>
-                  <Line
-                    data={chartExample2.data}
-                    options={chartExample2.options}
-                    height={380}
-                    width={828}
-                  />
-                </CardBody>
-                <CardFooter>
-                  <hr /> 
-                  <Row>
-                    <Col sm="">
-                      <div className="numbers pull-left">169</div>
-                    </Col>
-                    <Col sm="5">
-                      <div className="pull-right">
-                        <Badge color="danger" pill>
-                          -14%
-                        </Badge>
-                      </div>
-                    </Col>
-                  </Row>
-                </CardFooter>
-              </Card>
-            </Col>
-            
-          </Row>
           <Row>
             <Col md="12">
               <Card>
@@ -298,7 +221,18 @@ class Dashboard extends React.Component {
               </Card>
             </Col>
           </Row>
-          
+          <Row>
+            <Col md="12">
+            <Card>
+                <CardHeader>
+                  <CardTitle >
+                  <h2 className="big-title5">สรุปสถิติการยื่นขอความช่วยเหลือในแต่ละจังหวัด</h2>
+
+                  </CardTitle>
+                </CardHeader>
+            </Card>
+            </Col>
+          </Row>
         </div>
       </>
     );
