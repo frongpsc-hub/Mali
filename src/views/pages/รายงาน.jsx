@@ -63,23 +63,7 @@ const shownum = [
   ];
 
 const { ExportCSVButton } = CSVExport;
-state = {   
-    shownumOp: 10,
-    products: [
-      {
-        ภาค: "ภาคเหนือ",
-        จังหวัด: "ryuntp",
-        ประเภทภัย: "0873269511",
-        email: "ryu_r@hotmail.com",
-        totalfield: "3",
-        totalwarranty: "1",
-        details: 
-          
-        ,
-      },
-      
-    ],
-}
+
 class Dashboard extends React.Component {
   render() {
     return (

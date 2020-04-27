@@ -14,6 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import axios from 'axios';
 import React from "react";
 // react plugin used to create charts
 import { Line, Bar, Doughnut } from "react-chartjs-2";
@@ -50,22 +51,80 @@ import {
   chartExample8
 } from "variables/charts.jsx";
 
-var mapData = {
-  AU: 760,
-  BR: 550,
-  CA: 120,
-  DE: 1300,
-  FR: 540,
-  GB: 690,
-  GE: 200,
-  IN: 200,
-  RO: 600,
-  RU: 300,
-  US: 2920
-};
+
 
 class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      num_users:0,
+      num_war:0,
+      num_warno:0,
+      num_warwait:0
+    }
+  }
+  componentDidMount() {
+    // this.getAcceptedcount();
+ 
+    this.getNumeberAppUser();
+    this.getNumeberwar();
+    this.getNumeberwarwait();
+    this.getNumeberwarno();
+
+}
+
+  getNumeberAppUser = () => {
+    axios.get(`http://localhost:3001/api/v1/countuser`)
+        .then(res => {
+        console.log(res.data.Data[0].count)
+        this.setState({ num_users: res.data.Data[0].count });
+        })
+    }
+
+  getNumeberwar = () => {
+    axios.get(`http://localhost:3001/api/v1/countwarranty`, {headers: {"pid":1}})
+        .then(res => {
+         console.log(res.data.Data[0].count)
+         this.setState({ num_war: res.data.Data[0].count});
+        })
+    }
+  getNumeberwarno = () => {
+    axios.get(`http://localhost:3001/api/v1/countwarranty`, {headers: {"pid":2}})
+        .then(res => {
+         console.log(res.data.Data[0].count)
+         this.setState({ num_warno: res.data.Data[0].count});
+        })
+    } 
+  getNumeberwarwait = () => {
+    axios.get(`http://localhost:3001/api/v1/countwarranty`, {headers: {"pid":3}})
+        .then(res => {
+         console.log(res.data.Data[0].count)
+         this.setState({ num_warwait: res.data.Data[0].count});
+        })
+    }     
+  /*var request = new Request('http://localhost:3001/api/v1/countuser', {
+
+    method: 'POST',
+  });
+  
+  fetch(request)
+    .then((res) => res.json())
+    .then((res) => {
+      // // console.log("num_user: " + JSON.stringify(responseJson));
+
+      console.log(res)
+      this.setState({ num_users: res });
+    })
+    .catch(function (err) {
+      console.log(err);
+    })*/
+
+
   render() {
+    var n1=parseInt(this.state.num_war)
+    var n2=parseInt(this.state.num_warno)
+    var n3=parseInt(this.state.num_warwait)
+    var Total=n1+n2+n3
     return (
       <>
         <div className="content">
@@ -83,7 +142,7 @@ class Dashboard extends React.Component {
                     <Col md="8" xs="7">
                       <div className="numbers">
                         <p className="card-category" >ผู้ใช้งานทั้งหมด</p>
-                        <CardTitle tag="p">982</CardTitle>
+                        <CardTitle tag="p">{this.state.num_users}</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -109,8 +168,7 @@ class Dashboard extends React.Component {
                     <Col md="10" xs="7">
                       <div className="numbers">
                         <p className="card-category2 "  >การแจ้งรายงานความเสียหายทีผ่านยืนยัน</p>
-                        
-                        <CardTitle tag="p">861</CardTitle>
+                        <CardTitle tag="p">{this.state.num_war}</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -118,11 +176,17 @@ class Dashboard extends React.Component {
                 </CardBody>
                 <CardFooter>
                   <hr />
-                  
-                  <div className="stats">
-                    
-                    รายงานทั้งหมด
-                  </div>
+                  <Row>
+                    <Col sm="7">
+                      <div className="stats">รายงานทั้งหมด</div>
+                    </Col>
+                    <Col sm="5">
+                    <div className="stats" align="right">
+                      {Total}
+                      </div>
+                    </Col>
+                  </Row>
+
                   
                 </CardFooter>
               </Card>
@@ -139,7 +203,7 @@ class Dashboard extends React.Component {
                     <Col md="10" xs="7">
                       <div className="numbers">
                         <p className="card-category2">การแจ้งรายงานความเสียหายทีไม่ผ่านยืนยัน</p>
-                        <CardTitle tag="p">23</CardTitle>
+                        <CardTitle tag="p">{this.state.num_warno}</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -147,10 +211,16 @@ class Dashboard extends React.Component {
                 </CardBody>
                 <CardFooter>
                   <hr />
-                  <div className="stats">
-                    
-                    รายงานทั้งหมด
-                  </div>
+                  <Row>
+                    <Col sm="7">
+                      <div className="stats">รายงานทั้งหมด</div>
+                    </Col>
+                    <Col sm="5">
+                    <div className="stats" align="right">
+                      {Total}
+                      </div>
+                    </Col>
+                  </Row>
                 </CardFooter>
               </Card>
             </Col>
@@ -166,7 +236,7 @@ class Dashboard extends React.Component {
                     <Col md="10" xs="8">
                       <div className="numbers">
                         <p className="card-category2">การแจ้งรายงานความเสียหายทีรอการการยืนยัน</p>
-                        <CardTitle tag="p">+45K</CardTitle>
+                        <CardTitle tag="p">{this.state.num_warwait}</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -174,10 +244,16 @@ class Dashboard extends React.Component {
                 </CardBody>
                 <CardFooter>
                   <hr />
-                  <div className="stats">
-                    
-                    รายงานทั้งหมด
-                  </div>
+                  <Row>
+                    <Col sm="7">
+                      <div className="stats">รายงานทั้งหมด</div>
+                    </Col>
+                    <Col sm="5">
+                    <div className="stats" align="right">
+                      {Total}
+                    </div>
+                    </Col>
+                  </Row>
                 </CardFooter>
               </Card>
             </Col>
@@ -205,7 +281,7 @@ class Dashboard extends React.Component {
                   <hr />
                   <Row>
                     <Col sm="7">
-                      <div className="numbers pull-left">$34,657</div>
+                      <div className="numbers pull-left">{this.state.num_users}</div>
                     </Col>
                     <Col sm="5">
                       <div className="pull-right">
@@ -238,7 +314,7 @@ class Dashboard extends React.Component {
                   <hr /> 
                   <Row>
                     <Col sm="">
-                      <div className="numbers pull-left">169</div>
+                      <div className="numbers pull-left">{Total}</div>
                     </Col>
                     <Col sm="5">
                       <div className="pull-right">

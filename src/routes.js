@@ -98,11 +98,13 @@ const routes = [
     ]
   },
   {
-    collapse: true,
+    
     name: "การแจ้งรายงานความเสียหาย",
     icon: "nc-icon nc-single-copy-04",
-    state: "componentsCollapse",
-    views: [
+    path: "/regular-table",
+    component: RegularTables,
+    layout: "/admin"
+    /*views: [
       {
         path: "/buttons",
         name: "Buttons",
@@ -152,7 +154,7 @@ const routes = [
         component: Typography,
         layout: "/admin"
       }
-    ]
+    ]*/
   },
   {
     
@@ -197,7 +199,7 @@ const routes = [
   {
     
     //collapse: true,
-    path: "/google-maps",
+    path: "/คำถามที่พบบ่อย",
     layout: "/admin",
     name: "คำถามที่พบบ่อย",
     icon: "nc-icon nc-support-17",
