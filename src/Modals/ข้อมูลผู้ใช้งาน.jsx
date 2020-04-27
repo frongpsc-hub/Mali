@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles,ThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-
+import axios from 'axios';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import DialogContent from "@material-ui/core/DialogContent";
@@ -42,13 +42,47 @@ class Appuserinfo extends Component {
 
     this.state = {
       showModal:false,
+      fname:"",
+      lname:"",
+      tel:"",
+      email:"",
+      citizenid:"",
+      address:"",
+      moo:"",
+      road:"",
+      soi:"",
+      subdistrict:"",
+      district:"",
+      province:"",
+      postcode:""
+      
     }
     this.handleClickOpen=this.handleClickOpen.bind(this)
     this.handleClickClose=this.handleClickClose.bind(this)
   }
+
     handleClickOpen = () =>{
       this.setState({
         showModal:true
+      })
+      axios.get(`http://localhost:3001/api/v1/eachusers`, {headers: {"pid": this.props.uid}})
+      .then(res => {
+        console.log(res.data.Data[0])
+        this.setState({
+          fname :res.data.Data[0].fname,
+          lname :res.data.Data[0].lname,
+          tel :res.data.Data[0].tel,
+          email :res.data.Data[0].email,
+          citizenid :res.data.Data[0].citizenid,
+          address :res.data.Data[0].address,
+          moo :res.data.Data[0].moo,
+          road :res.data.Data[0].road,
+          soi :res.data.Data[0].soi,
+          subdistrict :res.data.Data[0].subdistrict,
+          district :res.data.Data[0].district,
+          province :res.data.Data[0].province,
+          postcode :res.data.Data[0].postcode
+        })
       })
     }
     handleClickClose = () =>{
@@ -124,14 +158,14 @@ class Appuserinfo extends Component {
                       disabled
                       type="text"
                       placeholder="ชื่อ"
-                      defaultValue="น้องมะลิซ้อน"
+                      defaultValue={this.state.fname}
                     />
                 </FormGroup>
                 
                 <FormGroup>
                   <label>เบอร์โทร</label>
                     <Input
-                      defaultValue="081-811-4459"
+                      defaultValue={this.state.tel}
                       disabled
                       placeholder="เบอร์โทร"
                       type="text"
@@ -141,7 +175,7 @@ class Appuserinfo extends Component {
                 <FormGroup>
                   <label>รหัสประชาชน</label>
                     <Input
-                      defaultValue="1123569874596"
+                      defaultValue={this.state.citizenid}
                       disabled
                       placeholder="รหัสประชาชน"
                       type="text"
@@ -151,7 +185,7 @@ class Appuserinfo extends Component {
                 <FormGroup>
                   <label>ตำบล</label>
                     <Input
-                      defaultValue="บางกระสอ"
+                      defaultValue={this.state.subdistrict}
                       disabled
                       placeholder="ตำบล"
                       type="text"
@@ -161,7 +195,7 @@ class Appuserinfo extends Component {
                 <FormGroup>
                   <label>จังหวัด</label>
                     <Input
-                      defaultValue="นนทบุรี"
+                      defaultValue={this.state.province}
                       disabled
                       placeholder="จังหวัด"
                       type="text"
@@ -179,14 +213,14 @@ class Appuserinfo extends Component {
                       disabled
                       type="text"
                       placeholder="นามสกุล"
-                      defaultValue="ประกันวินาศภัย"
+                      defaultValue={this.state.lname}
                     />
                 </FormGroup>
                 
                 <FormGroup>
                   <label>อีเมล</label>
                     <Input
-                      defaultValue="infuse@gmail.com"
+                      defaultValue={this.state.email}
                       disabled
                       placeholder="อีเมล"
                       type="text"
@@ -196,7 +230,7 @@ class Appuserinfo extends Component {
                 <FormGroup>
                   <label>ที่อยู่</label>
                     <Input
-                      defaultValue="115/556"
+                      defaultValue={this.state.address}
                       disabled
                       placeholder="ที่อยู่"
                       type="text"
@@ -206,7 +240,7 @@ class Appuserinfo extends Component {
                 <FormGroup>
                   <label>อำเภอ</label>
                     <Input
-                      defaultValue="เมือง"
+                      defaultValue={this.state.district}
                       disabled
                       placeholder="อำเภอ"
                       type="text"
@@ -216,7 +250,7 @@ class Appuserinfo extends Component {
                 <FormGroup>
                   <label>รหัสไปรษณีย์</label>
                     <Input
-                      defaultValue="11000"
+                      defaultValue={this.state.postcode}
                       disabled
                       placeholder="รหัสไปรษณีย์"
                       type="text"

@@ -51,6 +51,10 @@ class Viewuser extends Component {
     this.handleClickClose=this.handleClickClose.bind(this)
     this.edituser=this.edituser.bind(this)
   }
+  componentDidMount() {
+   
+
+}
     onChange(event){
     this.setState({
       position : event.target.value
@@ -77,6 +81,7 @@ class Viewuser extends Component {
         })
       }
   render(){
+    const uid=this.props.uid
     const { classes } = this.props;
     const DialogTitle = withStyles(styles)((props) => {
       const { children, classes, onClose, ...other } = props;
@@ -103,7 +108,7 @@ class Viewuser extends Component {
           
         <Col className="pr-1" md="6">
           <FormGroup>
-            <label>ชื่อ</label>
+            <label>ชื่อ {uid}</label>
             <Input
             disabled
               defaultValue=""

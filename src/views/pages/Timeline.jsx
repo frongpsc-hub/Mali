@@ -83,7 +83,7 @@ getAppUserinfo = () => {
       .then(res => {
       //console.log(res.data.Data)
       const product = res.data.Data.map(p => {
-        p.details = <div><Appuserinfo/></div>
+        p.details = <div><Appuserinfo uid={p.uid}/></div>
         return p
       })
 
@@ -98,7 +98,7 @@ getWebUserinfo = () => {
       .then(res => {
       console.log(res.data.Data)
       const product2 = res.data.Data.map(p => {
-        p.details = <div><Viewuser/></div>
+        p.details = <div><Viewuser uid={p.uid}/></div>
         return p
       })
 
@@ -429,6 +429,8 @@ getWebUserinfo = () => {
             >
               {(props) => (
                 <div>
+                  <Row>
+                  <Col sm="6">
                   <InputGroupAddon addonType="append">
                     <h4 style={{ paddingRight: 7 }}> ค้นหาจากตาราง </h4>
                     
@@ -439,9 +441,16 @@ getWebUserinfo = () => {
                     />
                     
                   </InputGroupAddon>
-                  
                   <SearchBar style={searchStyle} {...props.searchProps} />
+                  </Col>
+                  <Col sm="6" align="right">
                   <Adduser/>
+                  </Col>
+                  </Row>
+                  
+                  
+
+                  
                   <hr />
                   <BootstrapTable
                     rowStyle={rowStyle2}
