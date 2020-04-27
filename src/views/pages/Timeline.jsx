@@ -1,6 +1,4 @@
-
-
-
+import axios from 'axios';
 import Select from "react-select";
 import { NavLink } from "react-router-dom";
 import React from "react";
@@ -57,302 +55,61 @@ const completeInfo = [
 const { ExportCSVButton } = CSVExport;
 
 export default class RegularTables extends React.Component {
-  // for status option
-  state = {
-    selectedOption: "รอการอนุมัติ",
+  constructor(props) {
+    super(props);
+    this.state = {
+      num_users:0,
+      num_war:0,
+      num_warno:0,
+      num_warwait:0,
+      selectedOption: "รอการอนุมัติ",
     shownumOp: 10,
     completeInf: "รอการอนุมัติ",
-    products: [
-      {
-        id: 993,
-        name: "ryuntp",
-        tel: "0873269511",
-        email: "ryu_r@hotmail.com",
-        totalfield: "3",
-        totalwarranty: "1",
-        details: 
-          <Appuserinfo/>
-        ,
-      },
-      {
-        id: 1,
-        name: "suthep",
-        tel: "0837272626",
-        email: "suthep@hotmail.com",
-        totalfield: "4",
-        totalwarranty: "1",
-        details: <Appuserinfo/>,
-      },
-      {
-        id: 4,
-        name: "mali",
-        tel: "0855555555",
-        email: "mali@hotmail.com",
-        totalfield: "2",
-        totalwarranty: "1",
-        details: (
-          <Appuserinfo/>
-        ),
-      },
-      {
-        id: 7,
-        name: "boss",
-        tel: "0850493939",
-        email: "bossposeidon@hotmail.com",
-        totalfield: "2",
-        totalwarranty: "1",
-        details: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 11,
-        name: "frong",
-        tel: "0859203918",
-        email: "frong@hotmail.com",
-        totalfield: "1",
-        totalwarranty: "1",
-        details: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 3,
-        name: "ice",
-        tel: "0823234242",
-        email: "ice@hotmail.com",
-        totalfield: "1",
-        totalwarranty: "1",
-        details: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 2,
-        name: "ailada",
-        tel: "0983738282",
-        email: "woww@hotmail.com",
-        totalfield: "6",
-        totalwarranty: "6",
-        details: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 8,
-        name: "bit",
-        tel: "0928382828",
-        email: "bit@hotmail.com",
-        totalfield: "5",
-        totalwarranty: "9",
-        details: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 9,
-        name: "sawan",
-        tel: "0810202020",
-        email: "sawan@hotmail.com",
-        totalfield: "8",
-        totalwarranty: "8",
-        details: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 111,
-        name: "sun",
-        tel: "0869690929",
-        email: "sunlnw@hotmail.com",
-        totalfield: "3",
-        totalwarranty: "3",
-        details: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 333,
-        name: "วิชัย",
-        tel: "0983726354",
-        email: "wichai@hotmail.com",
-        totalfield: "2",
-        totalwarranty: "2",
-        details: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 123,
-        name: "euei",
-        tel: "0927461638",
-        email: "reuei1998@gmail.com",
-        totalfield: "1",
-        totalwarranty: "2",
-        details: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-    ],
+    products: [],
 
 
-    products2: [
-      
-      {
-        id: 1,
-        name: "suthep",
-        tel: "0837272626",
-        email: "suthep@hotmail.com",
-        position: "ผู้ดูแลระบบ",
-        status: "เปิดใช้งาน",
-        manageuser: <Viewuser/>,
-      },
-      {
-        id: 4,
-        name: "mali",
-        tel: "0855555555",
-        email: "mali@hotmail.com",
-        position: "ผู้ดูแลระบบ",
-        status: "เปิดใช้งาน",
-        manageuser: (
-          <Viewuser/>
-        ),
-      },
-      {
-        id: 7,
-        name: "boss",
-        tel: "0850493939",
-        email: "bossposeidon@hotmail.com",
-        position: "ผู้ดูแลระบบ",
-        status: "เปิดใช้งาน",
-        manageuser: (
-          <Viewuser/>
-        ),
-      },
-      {
-        id: 11,
-        name: "frong",
-        tel: "0859203918",
-        email: "frong@hotmail.com",
-        position: "ผู้ดูแลระบบ",
-        status: "เปิดใช้งาน",
-        manageuser: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 3,
-        name: "ice",
-        tel: "0823234242",
-        email: "ice@hotmail.com",
-        position: "เจ้าหน้าที่",
-        status: "เปิดใช้งาน",
-        manageuser: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 2,
-        name: "ailada",
-        tel: "0983738282",
-        email: "woww@hotmail.com",
-        position: "เจ้าหน้าที่",
-        status: "ปิดใช้งาน",
-        manageuser: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 8,
-        name: "bit",
-        tel: "0928382828",
-        email: "bit@hotmail.com",
-        position: "เจ้าหน้าที่",
-        status: "ปิดใช้งาน",
-        manageuser: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 9,
-        name: "sawan",
-        tel: "0810202020",
-        email: "sawan@hotmail.com",
-        position: "เจ้าหน้าที่",
-        status: "ปิดใช้งาน",
-        manageuser: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 111,
-        name: "sun",
-        tel: "0869690929",
-        email: "sunlnw@hotmail.com",
-        position: "เจ้าหน้าที่",
-        status: "ปิดใช้งาน",
-        manageuser: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 333,
-        name: "วิชัย",
-        tel: "0983726354",
-        email: "wichai@hotmail.com",
-        position: "เจ้าหน้าที่",
-        status: "ปิดใช้งาน",
-        manageuser: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-      {
-        id: 123,
-        name: "euei",
-        tel: "0927461638",
-        email: "reuei1998@gmail.com",
-        position: "เจ้าหน้าที่",
-        status: "ปิดใช้งาน",
-        manageuser: (
-          <NavLink to="/admin/dashboard" activeClassName="">
-            <span>เรียกดูข้อมูล</span>
-          </NavLink>
-        ),
-      },
-    ],
-  };
+    products2: [],
+    }
+  }
+  componentDidMount() {
+    // this.getAcceptedcount();
+ 
+    this.getAppUserinfo();
+    this.getWebUserinfo();
+
+}
+getAppUserinfo = () => {
+  axios.get(`http://localhost:3001/api/v1/manageuser`)
+      .then(res => {
+      //console.log(res.data.Data)
+      const product = res.data.Data.map(p => {
+        p.details = <div><Appuserinfo/></div>
+        return p
+      })
+
+
+      this.setState({ products: product });
+      //console.log(this.state.products)
+      })
+}
+
+getWebUserinfo = () => {
+  axios.get(`http://localhost:3001/api/v1/managewebusers`)
+      .then(res => {
+      console.log(res.data.Data)
+      const product2 = res.data.Data.map(p => {
+        p.details = <div><Viewuser/></div>
+        return p
+      })
+
+
+      this.setState({ products2: product2 });
+      console.log(this.state.products2)
+      })
+}
+
+  // for status option
+ 
 
   handleChange = ({ selectedOption }) => {
     this.setState({ selectedOption });
@@ -380,7 +137,7 @@ export default class RegularTables extends React.Component {
 
     const columns = [
       {
-        dataField: "id",
+        dataField: "uid",
         text: "ลำดับ",
         sort: true,
         align :'center',
@@ -390,14 +147,25 @@ export default class RegularTables extends React.Component {
         }
       },
       {
-        dataField: "name",
+        dataField: "fname",
         sort: true,
-        text: "ชื่อ-สกุล",
+        text: "ชื่อ",
         editable: false,
         align :'center',
         headerAlign :'center',
         headerStyle:{
-          width : 250
+          width : 125
+        }
+      },
+      {
+        dataField: "lname",
+        sort: true,
+        text: "สกุล",
+        editable: false,
+        align :'center',
+        headerAlign :'center',
+        headerStyle:{
+          width : 125
         }
       },
       {
@@ -423,7 +191,7 @@ export default class RegularTables extends React.Component {
         }
       },
       {
-        dataField: "totalfield",
+        dataField: "fieldcount",
         sort: true,
         text: "จำนวนแปลง",
         editable: false,
@@ -431,9 +199,9 @@ export default class RegularTables extends React.Component {
         headerAlign :'center',
       },
       {
-        dataField: "totalwarranty",
+        dataField: "warrantycount",
         sort: true,
-        text: "จำนวนการยื่นขอความช่วยเหลือ",
+        text: "จำนวนการรายงานความเสียหาย",
         editable: false,
         align :'center',
         headerAlign :'center',
@@ -450,7 +218,7 @@ export default class RegularTables extends React.Component {
 
     const columns2 = [
       {
-        dataField: "id",
+        dataField: "uid",
         text: "ลำดับ",
         sort: true,
         align :'center',
@@ -460,14 +228,25 @@ export default class RegularTables extends React.Component {
         }
       },
       {
-        dataField: "name",
+        dataField: "fname",
         sort: true,
-        text: "ชื่อ-สกุล",
+        text: "ชื่อ",
         editable: false,
         align :'center',
         headerAlign :'center',
         headerStyle:{
-          width : 250
+          width : 125
+        }
+      },
+      {
+        dataField: "lname",
+        sort: true,
+        text: "สกุล",
+        editable: false,
+        align :'center',
+        headerAlign :'center',
+        headerStyle:{
+          width : 125
         }
       },
       {
@@ -493,7 +272,7 @@ export default class RegularTables extends React.Component {
         }
       },
       {
-        dataField: "position",
+        dataField: "role_name",
         sort: true,
         text: "สิทธิ์ผู้ใช้งาน",
         editable: false,
@@ -504,7 +283,7 @@ export default class RegularTables extends React.Component {
         }
       },
       {
-        dataField: "status",
+        dataField: "disabled",
         sort: true,
         text: "สถานะ",
         align :'center',
@@ -521,7 +300,7 @@ export default class RegularTables extends React.Component {
         }
       },
       {
-        dataField: "manageuser",
+        dataField: "details",
         align :'center',
         text: "จัดการผู้ใช้งาน",
         editable: false,
@@ -729,7 +508,7 @@ export default class RegularTables extends React.Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h2">การยื่นขอความช่วยเหลือ</CardTitle>
+                  <CardTitle tag="h2">จัดการผู้ใช้งาน</CardTitle>
                 </CardHeader>
                 <CardBody className="table-full-width table-hover">
                   <Tab panes={panes} />
