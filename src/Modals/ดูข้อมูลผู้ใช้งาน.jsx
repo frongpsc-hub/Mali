@@ -59,7 +59,7 @@ class Viewuser extends Component {
     this.onChange=this.onChange.bind(this)
     this.onChange2=this.onChange2.bind(this)
     this.getProbranch=this.getProbranch.bind(this)
-    this.getbranch=this.getProbranch.bind(this)
+    this.getbranch=this.getbranch.bind(this)
     this.handleClickOpen=this.handleClickOpen.bind(this)
     this.handleClickClose=this.handleClickClose.bind(this)
     this.edituser=this.edituser.bind(this)
@@ -90,6 +90,8 @@ class Viewuser extends Component {
          branch_id:res.data.Data[0].branch_id,
          branch_pro_id:res.data.Data[0].branch_pro_id,
         })
+        this.getProbranch();
+        this.getbranch();
        if(res.data.Data[0].role_name == "ผู้ดูแลระบบ"){
         this.setState({
           position:'A',
@@ -118,8 +120,7 @@ class Viewuser extends Component {
       }
        
       })
-      this.getProbranch();
-      this.getbranch();
+     
       
     }
 
