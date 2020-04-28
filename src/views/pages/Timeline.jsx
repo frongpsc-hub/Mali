@@ -78,6 +78,7 @@ export default class RegularTables extends React.Component {
     this.getWebUserinfo();
 
 }
+
 getAppUserinfo = () => {
   axios.get(`http://localhost:3001/api/v1/manageuser`)
       .then(res => {
@@ -101,8 +102,6 @@ getWebUserinfo = () => {
         p.details = <div><Viewuser uid={p.uid}/></div>
         return p
       })
-
-
       this.setState({ products2: product2 });
       console.log(this.state.products2)
       })
@@ -484,7 +483,7 @@ getWebUserinfo = () => {
                   />
                   <tr>
                     <td>
-                      แสดงจากข้อมูลทั้งหมด {this.state.products.length} แถว
+                      แสดงจากข้อมูลทั้งหมด {this.state.products2  .length} แถว
                     </td>
                     <td style={{ paddingLeft: 550, paddingBottom: 35 }}>
                       <ExportCSVButton {...props.csvProps}>
@@ -501,7 +500,6 @@ getWebUserinfo = () => {
               keyField="id"
               data={products}
               columns={columns}
-              
             /> */}
             </ToolkitProvider>
           </Tab.Pane>

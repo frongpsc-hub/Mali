@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { withStyles,ThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -43,6 +44,7 @@ class CustomizedDialogs extends Component {
 
     this.state = {
       showModal:false,
+      
     }
     this.handleClickOpen=this.handleClickOpen.bind(this)
     this.handleClickClose=this.handleClickClose.bind(this)
@@ -52,6 +54,7 @@ class CustomizedDialogs extends Component {
         showModal:true
       })
     }
+      
     handleClickClose = () =>{
       this.setState({
         showModal:false
@@ -90,12 +93,12 @@ class CustomizedDialogs extends Component {
           id="customized-dialog-title" 
           onClose={this.handleClickClose}
           >
-          คำร้องลำดับที่ 1
+          คำร้องลำดับที่ {this.props.uid}
                
         </DialogTitle>
         <DialogContent dividers>
         
-          <FormPropsTextFields/>
+          <FormPropsTextFields uid={this.props.uid}/>
         
         </DialogContent>
         <DialogActions>

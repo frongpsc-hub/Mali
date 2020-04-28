@@ -9,7 +9,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { Component } from 'react';
-
+import axios from 'axios';
 
 
 // Unsplash images from the "Adventure" collection
@@ -32,10 +32,67 @@ export default class FormPropsTextFields extends Component {
   
       this.state = {
         disabled:'disabled',
-        value:'ยืนยันว่าพื้นที่เสียหายไม่อยู่ในเขตประกันภัย'
+        value:'ยืนยันว่าพื้นที่เสียหายไม่อยู่ในเขตประกันภัย',
+        amphoe_t: "",
+        branch_name: "",
+        branch_pro_name: "" ,
+        disaster_nameth: "",
+        province_t: "",
+        status_name: "",
+        tambon_t: "",
+        warranty_address: "",
+        warranty_citizenid: "",
+        warranty_dmgdate: "",
+        warranty_fname: "",
+        warranty_harvestdate: "",
+        warranty_id: "",
+        warranty_lname: "",
+        warranty_no: "",
+        warranty_plantdate: "",
+        warranty_postalcode: "",
+        warranty_status: "",
+        warranty_timestamp: "",
+        warranty_tgiano:""
       }
       this.handleChange=this.handleChange.bind(this);
     }
+
+    componentDidMount() {
+      // this.getAcceptedcount();
+   
+      this.getwarrantyinfo();
+  
+  }
+  
+  getwarrantyinfo = () => {
+    axios.get(`http://localhost:3001/api/v1/warrantymoreinfo`, {headers: {"pid": this.props.uid}})
+    .then(res => {
+      console.log(res.data.Data[0])
+      this.setState({
+        amphoe_t: res.data.Data[0].amphoe_t,
+        branch_name: res.data.Data[0].branch_name,
+        branch_pro_name: res.data.Data[0].branch_pro_name ,
+        disaster_nameth: res.data.Data[0].disaster_nameth,
+        province_t: res.data.Data[0].province_t,
+        status_name: res.data.Data[0].status_name,
+        tambon_t: res.data.Data[0].tambon_t,
+        warranty_address: res.data.Data[0].warranty_address+ " " +res.data.Data[0].warranty_moo+" "+res.data.Data[0].warranty_soi+" "+res.data.Data[0].warranty_road,
+        warranty_citizenid: res.data.Data[0].warranty_citizenid,
+        warranty_dmgdate: res.data.Data[0].warranty_dmgdate,
+        warranty_fname: res.data.Data[0].warranty_fname,
+        warranty_harvestdate: res.data.Data[0].warranty_harvestdate,
+        warranty_id: res.data.Data[0].warranty_id,
+        warranty_lname: res.data.Data[0].warranty_lname,
+        warranty_no: res.data.Data[0].warranty_no,
+        warranty_plantdate: res.data.Data[0].warranty_plantdate,
+        warranty_postalcode: res.data.Data[0].warranty_postalcode,
+        warranty_status: res.data.Data[0].warranty_status,
+        warranty_timestamp: res.data.Data[0].warranty_timestamp,
+        warranty_tgiano:res.data.Data[0].warranty_tgiano
+      })
+    })
+  }
+  
    handleChange= (e) => {
     this.setState({
       value: e.target.value
@@ -68,7 +125,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="เลขบัญชี"
           placeholder="เลขบัญชี"
-          defaultValue="Hello World"
+          defaultValue={this.state.warranty_no}
           readOnly={true}
         />
       </FormGroup>
@@ -78,7 +135,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="สำนักงาน ธ.ก.ส."
           placeholder="สำนักงาน ธ.ก.ส."
-          defaultValue="Hello World"
+          defaultValue={this.state.branch_pro_name}
           readOnly={true}
         />
        </FormGroup>
@@ -89,7 +146,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="สาขา ธ.ก.ส."
           placeholder="สาขา ธ.ก.ส."
-          defaultValue="Hello World"
+          defaultValue={this.state.branch_name}
           readOnly={true}
         />
         </FormGroup>
@@ -99,7 +156,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="เลขที่เอกสารสิทธิ์/เลขทะเบียนการเกษตร"
           placeholder="เลขที่เอกสารสิทธิ์/เลขทะเบียนการเกษตร"
-          defaultValue="Hello World"
+          defaultValue={this.state.warranty_tgiano}
           readOnly={true}
         />
         </FormGroup>
@@ -109,7 +166,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="ชื่อ"
           placeholder="ชื่อ"
-          defaultValue="Hello World"
+          defaultValue={this.state.warranty_fname}
           readOnly={true}
         />
         </FormGroup>
@@ -119,7 +176,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="นามสกุล"
           placeholder="นามสกุล"
-          defaultValue="Hello World"
+          defaultValue={this.state.warranty_lname}
           readOnly={true}
         />
         </FormGroup>
@@ -129,7 +186,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="เลขประจำตัวประชาชน"
           placeholder="เลขประจำตัวประชาชน"
-          defaultValue="Hello World"
+          defaultValue={this.state.warranty_citizenid}
           readOnly={true}
         />
         </FormGroup>
@@ -139,7 +196,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="ที่อยู่"
           placeholder="ที่อยู่"
-          defaultValue="Hello World"
+          defaultValue={this.state.warranty_address}  
           readOnly={true}
         />
         </FormGroup>
@@ -149,7 +206,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="ตำบล"
           placeholder="ตำบล"
-          defaultValue="Hello World"
+          defaultValue={this.state.tambon_t}
           readOnly={true}
         />
         </FormGroup>
@@ -159,7 +216,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="อำเภอ"
           placeholder="อำเภอ"
-          defaultValue="Hello World"
+          defaultValue={this.state.amphoe_t}
           readOnly={true}
         />
         </FormGroup>
@@ -169,7 +226,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="จังหวัด"
           placeholder="จังหวัด"
-          defaultValue="Hello World"
+          defaultValue={this.state.province_t}
           readOnly={true}
         />
         </FormGroup>
@@ -179,7 +236,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="เลขไปรษณีย์"
           placeholder="เลขไปรษณีย์"
-          defaultValue="Hello World"
+          defaultValue={this.state.warranty_postalcode}
           readOnly={true}
         />
         </FormGroup>
@@ -199,11 +256,11 @@ export default class FormPropsTextFields extends Component {
     />
 
         <FormGroup>
-        <Label>โปรดเลือกประเภทภัย</Label>
+        <Label>ประเภทภัย</Label>
         <Input
-          name="โปรดเลือกประเภทภัย"
+          name="ประเภทภัย"
           placeholder="ภัยแล้ง"
-          defaultValue="Hello World"
+          defaultValue={this.state.disaster_nameth}
           readOnly={true}
         />
         </FormGroup>

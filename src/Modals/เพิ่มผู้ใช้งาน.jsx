@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles,ThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-
+import axios from 'axios';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import DialogContent from "@material-ui/core/DialogContent";
@@ -43,9 +43,12 @@ class Adduser extends Component {
     this.state = {
       position :'A',
       showModal:false,
+      probranch:[],
+      branch:[]
       
     }
     this.onChange=this.onChange.bind(this)
+    this.onChange2=this.onChange2.bind(this)
     this.handleClickOpen=this.handleClickOpen.bind(this)
     this.handleClickClose=this.handleClickClose.bind(this)
   }
@@ -59,7 +62,30 @@ class Adduser extends Component {
         showModal:true,
         position : 'A'
       })
+      this.getProbranch();
     }
+    getProbranch = () => {
+      axios.get(`http://localhost:3001/api/v1/allprobranch`)
+          .then(res => {
+          console.log(res.data)
+          this.setState({
+            probranch:res.data.Data
+          })
+          console.log(this.state.probranch)
+          
+          })
+    }
+    onChange2(event){
+      axios.get(`http://localhost:3001/api/v1/branch` ,{headers: {"pid": event.target.value}})
+          .then(res => {
+          console.log(res.data)
+          this.setState({
+            branch:res.data.Data
+          })
+          console.log(this.state.branch)
+          })
+      
+      }
     handleClickClose = () =>{
       this.setState({
         showModal:false
@@ -168,7 +194,7 @@ class Adduser extends Component {
     else{
       form =
       <div>
-      <div >
+      <div>
       <Row>
           
         <Col className="pr-1" md="6">
@@ -221,10 +247,8 @@ class Adduser extends Component {
         <Col className="pr-1" md="6">
           <FormGroup>
             <label>สำนักงาน ธ.ก.ส.</label>
-            <Input type="select" name="select" id="exampleSelect" >
-                <option value=''></option>
-                <option value=''></option>
-                <option value=''></option>        
+            <Input type="select" name="select" id="exampleSelect" onChange={this.onChange2}>
+              {this.state.probranch.map((p) => <option key={p.branch_pro_id} value={p.branch_pro_id}>{p.branch_pro_name}</option>)}        
             </Input>
           </FormGroup>
         </Col>
@@ -232,9 +256,7 @@ class Adduser extends Component {
           <FormGroup>
             <label>สาขา ธ.ก.ส.</label>
             <Input type="select" name="select" id="exampleSelect" >
-                <option value=''></option>
-                <option value=''></option>
-                <option value=''></option>        
+              {this.state.branch.map((p) => <option key={p.branch_id} value={p.branch_id}>{p.branch_name}</option>)}     
             </Input>
           </FormGroup>
         </Col>

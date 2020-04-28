@@ -36,7 +36,6 @@ import {
   Table,
   Row,
   Col,
-
   UncontrolledTooltip
 } from "reactstrap";
 
