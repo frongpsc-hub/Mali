@@ -23,6 +23,7 @@ import L from 'leaflet';
 
 // Full Screen Control react-leaflet;
 import 'react-leaflet-fullscreen/dist/styles.css'
+import 'leaflet/dist/leaflet.css';
 
 
 const { BaseLayer, Overlay } = LayersControl
@@ -68,7 +69,7 @@ export const cooperativeShopPoint = new L.Icon({
 // const satellite = 'SATELLITE';
 
 // variable for map for global variable
-var map;
+var map=null;
 
 // Base Map
 const googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
@@ -131,29 +132,30 @@ class Fields extends React.Component {
    
     }
 
-    /*componentDidUpdate() {
+    componentDidUpdate() {
         // console.log("fields: " + JSON.stringify(this.state.fields))
         // console.log("user_tractor: " + JSON.stringify(this.state.user_tractor))
 
-        if(this.state.lands !== undefined
+        if(this.state.lands !== undefined && this.state.stateSetOverlayMap === false
         ) {
             // console.log("request all information are success")
+            
+      
             this._setMap();
         }
-    }*/
+    }
 
     // -------------------------------------------- Setup Map function -------------------------------------------
     _setMap = () => {
         let lands = this.state.lands;
-      
-        console.log("aa")
+        
         // let polygon_lands = L.markerClusterGroup();
      
         let OverlayLand = [];
 
         let popupContent;
         let geojsonFeature;
-
+      
         map = L.map('map', {
             center: [13.736717, 100.523186], 
             zoom: 6,
@@ -162,16 +164,22 @@ class Fields extends React.Component {
             fullscreenControlOptions: {
               position: 'topleft'
             },
+           
         });
-
+        console.log("aa")
+        console.log(map); // should output the object that represents instance of Leaflet
+/*if (map !== undefined && map !== null) {
+    map.remove(); // should remove the map from UI and clean the inner children of DOM element
+  console.log(map); // nothing should actually happen to the value of mymap
+}*/
         // set marker leaflet
         lands.map((item, key) => {
-            /*popupContent = `${item.firstname} ${item.lastname} <br /> \
+            popupContent = `${item.fname} ${item.lname} <br /> \
                 <br />
-                <b>จังหวัด:</b> ${item.prov_name} <br />
-                <b>อำเภอ:</b> ${item.amp_name} <br />
-                <b>ตำบล:</b> ${item.tam_name} <br />`;
-*/
+                <b>จังหวัด:</b> ${item.province_t} <br />
+                <b>อำเภอ:</b> ${item.amphoe_t} <br />
+                <b>ตำบล:</b> ${item.tambon_t} <br />`;
+
             // Polygon
             if(item.geojson.type.toString() === "Polygon" || item.geojson.type.toString() === "MultiPolygon") {
                 // console.log("log: " + item.geojson.type.toString())
@@ -211,7 +219,7 @@ class Fields extends React.Component {
     
         L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-        legend1.onAdd = function (map) {
+        /*legend1.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info_legend legend'),
                 grades = [0, 0, 0],
                 labels = ['ปัญหาด้านราคา', 'ปัญหาด้านปริมาณ', 'ปัญหาด้านราคา และ ปริมาณ'];
@@ -228,7 +236,7 @@ class Fields extends React.Component {
 
             return div;
         };
-        legend1.addTo(map);
+        legend1.addTo(map);*/
 
         this.setState({ stateSetOverlayMap: true });
     }
