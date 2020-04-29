@@ -65,8 +65,6 @@ class Viewuser extends Component {
     this.edituser=this.edituser.bind(this)
   }
   componentDidMount() {
-   
-
 }
     onChange(event){
     this.setState({

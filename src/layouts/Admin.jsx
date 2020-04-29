@@ -100,7 +100,7 @@ class Admin extends React.Component {
           activeColor={this.state.activeColor}
         />
         <div className="main-panel" ref="mainPanel">
-          <AdminNavbar {...this.props} handleMiniClick={this.handleMiniClick} />
+          <AdminNavbar routes={routes} {...this.props} handleMiniClick={this.handleMiniClick} />
           <Switch>{this.getRoutes(routes)}</Switch>
           {// we don't want the Footer to be rendered on full screen maps page
           this.props.location.pathname.indexOf("full-screen-map") !==

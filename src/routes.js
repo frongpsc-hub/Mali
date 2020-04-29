@@ -42,6 +42,7 @@ import ValidationForms from "views/forms/ValidationForms.jsx";
 import VectorMap from "views/maps/VectorMap.jsx";
 import Widgets from "views/Widgets.jsx";
 import Wizard from "views/forms/Wizard.jsx";
+import Fields from "views/pages/Map.jsx";
 
 const routes = [
   {
@@ -167,35 +168,13 @@ const routes = [
    
   },
   {
-    collapse: true,
     name: "แผนที่",
     icon: "nc-icon nc-map-big",
     state: "tablesCollapse",
-    views: [
-      {
-        path: "/regular-tables",
-        name: "Regular Tables",
-        mini: "RT",
-        component: RegularTables,
-        layout: "/admin"
-      },
-      {
-        path: "/extended-tables",
-        name: "Extended Tables",
-        mini: "ET",
-        component: ExtendedTables,
-        layout: "/admin"
-      },
-      {
-        path: "/react-tables",
-        name: "React Tables",
-        mini: "RT",
-        component: ReactTables,
-        layout: "/admin"
-      }
-    ]
+    path: "/แผนที่",
+    component: Fields,
+    layout: "/admin"
   },
-  
   {
     
     //collapse: true,

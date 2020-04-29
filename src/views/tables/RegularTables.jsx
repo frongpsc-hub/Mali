@@ -149,6 +149,10 @@ export default class RegularTables extends React.Component {
   };
   afterSave = () => {};
   render() {
+    const options = [{
+      dataField: "warranty_id",  //default sort column name
+      order: "asc",  //default sort order
+    }];
     const { selectedOption } = this.state;
     const { shownumOp } = this.state;
     const { completeInf } = this.state;
@@ -318,8 +322,10 @@ export default class RegularTables extends React.Component {
                 <SearchBar style={searchStyle} {...props.searchProps} />
 
                 <hr />
+                
                 <BootstrapTable
                   rowStyle={rowStyle2}
+                  defaultSorted={options}
                   onDataSizeChange={this.handleDataChange}
                   striped
                   pagination={paginationFactory()}

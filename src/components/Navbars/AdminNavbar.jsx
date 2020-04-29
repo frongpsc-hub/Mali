@@ -14,6 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import routes from "routes.js";
 import React from "react";
 import classnames from "classnames";
 import {
@@ -68,6 +69,33 @@ class AdminNavbar extends React.Component {
       });
     }
   };
+  getBrand = () => {
+    var name;
+    this.props.routes.map((prop, key) => {
+      if (prop.collapse) {
+        prop.views.map((prop, key) => {
+          if (prop.layout + prop.path === this.props.location.pathname) {
+            name = prop.name;
+          }
+          return null;
+        });
+      } else {
+        if (prop.redirect) {
+          if (prop.layout + prop.path === this.props.location.pathname) {
+            name = prop.name;
+          }
+        } else {
+          if (prop.layout + prop.path === this.props.location.pathname) {
+            name = prop.name;
+          }
+          // filter pathname
+          
+        }
+      }
+      return null;
+    });
+    return name;
+  }
   // this function opens and closes the sidebar on small devices
   toggleSidebar = () => {
     document.documentElement.classList.toggle("nav-open");
@@ -123,7 +151,7 @@ class AdminNavbar extends React.Component {
               </div>
               <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
                 <span className="d-none d-md-block">
-                  Paper Dashboard PRO React
+                {this.getBrand()}
                 </span>
                 <span className="d-block d-md-none">PD PRO React</span>
               </NavbarBrand>
