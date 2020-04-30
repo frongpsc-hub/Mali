@@ -98,7 +98,7 @@ class CustomizedDialogs extends Component {
         </DialogTitle>
         <DialogContent dividers>
         
-          <FormPropsTextFields uid={this.props.uid}/>
+          <FormPropsTextFields uid={this.props.uid} print={(eiei)=>console.log(eiei)}/>
         
         </DialogContent>
         <DialogActions>

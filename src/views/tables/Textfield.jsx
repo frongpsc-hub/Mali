@@ -61,8 +61,11 @@ export default class FormPropsTextFields extends Component {
       // this.getAcceptedcount();
    
       this.getwarrantyinfo();
+      this.props.print("kuy")
   
   }
+
+
   
   getwarrantyinfo = () => {
     axios.get(`http://localhost:3001/api/v1/warrantymoreinfo`, {headers: {"pid": this.props.uid}})

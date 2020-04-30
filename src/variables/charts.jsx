@@ -60,6 +60,7 @@ Chart.pluginService.register({
 
 // default color for the charts
 let chartColor = "#FFFFFF";
+
 // ##############################
 // // // Function that converts a hex color number to a RGB color number
 // #############################
@@ -83,6 +84,7 @@ const hexToRGB = (hex, alpha) => {
 // // // used inside src/views/Dashboard.jsx and src/views/Charts.jsx
 // #########################################
 const chartExample1 = {
+  
   data: {
     labels: [
       "Jan",
@@ -94,7 +96,9 @@ const chartExample1 = {
       "Jul",
       "Aug",
       "Sep",
-      "Oct"
+      "Oct",
+      "Nov",
+      "Dec"
     ],
     datasets: [
       {
@@ -104,7 +108,7 @@ const chartExample1 = {
         pointHoverRadius: 0,
         fill: false,
         borderWidth: 3,
-        data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610]
+        data: [542, 480, 430, 550, 530, 453, 380, 434, 568]
       }
     ]
   },
@@ -168,7 +172,20 @@ const chartExample2 = {
     gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
     gradientFill.addColorStop(1, hexToRGB("#18ce0f", 0.4));
     return {
-      labels: ["12pm", "3pm", "6pm", "9pm", "12am", "3am", "6am", "9am"],
+      labels: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
       datasets: [
         {
           label: "Email Stats",

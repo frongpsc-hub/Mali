@@ -282,7 +282,7 @@ getWebUserinfo = () => {
         }
       },
       {
-        dataField: "disabled",
+        dataField: "dis_name",
         sort: true,
         text: "สถานะ",
         align :'center',

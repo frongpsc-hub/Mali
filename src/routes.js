@@ -102,7 +102,7 @@ const routes = [
     
     name: "การแจ้งรายงานความเสียหาย",
     icon: "nc-icon nc-single-copy-04",
-    path: "/regular-table",
+    path: "/การแจ้งรายงานความเสียหาย",
     component: RegularTables,
     layout: "/admin"
     /*views: [
@@ -209,18 +209,16 @@ const routes = [
     ]*/
   },
   {
-    path: "/widgets",
+    
     name: "คู่มือเข้าใช้งาน",
     icon: "nc-icon nc-alert-circle-i",
-    component: Widgets,
-    layout: "/admin"
+ 
   },
   {
-    path: "/charts",
+ 
     name: "ติดต่อเรา",
     icon: "nc-icon nc-email-85",
-    component: Charts,
-    layout: "/admin"
+   
   },
   // {
   //   path: "/calendar",

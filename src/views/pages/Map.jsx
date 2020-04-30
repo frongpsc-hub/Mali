@@ -136,7 +136,7 @@ class Fields extends React.Component {
         // console.log("fields: " + JSON.stringify(this.state.fields))
         // console.log("user_tractor: " + JSON.stringify(this.state.user_tractor))
 
-        if(this.state.lands !== undefined && this.state.stateSetOverlayMap === false
+        if(this.state.lands !== undefined && this.state.stateSetOverlayMap === false && this.state.lands1 !== undefined
         ) {
             // console.log("request all information are success")
             
@@ -148,10 +148,11 @@ class Fields extends React.Component {
     // -------------------------------------------- Setup Map function -------------------------------------------
     _setMap = () => {
         let lands = this.state.lands;
-        
+        let lands1 =this.state.lands1;
         // let polygon_lands = L.markerClusterGroup();
      
         let OverlayLand = [];
+        let OverlayLand1 = [];
 
         let popupContent;
         let geojsonFeature;
@@ -174,11 +175,20 @@ class Fields extends React.Component {
 }*/
         // set marker leaflet
         lands.map((item, key) => {
-            popupContent = `${item.fname} ${item.lname} <br /> \
-                <br />
-                <b>จังหวัด:</b> ${item.province_t} <br />
-                <b>อำเภอ:</b> ${item.amphoe_t} <br />
-                <b>ตำบล:</b> ${item.tambon_t} <br />`;
+            popupContent = `
+            
+            
+            <div>
+            <h5>ข้อมูลแปลง</h5>
+            <b>ชื่อเจ้าของแปลง</b><br />
+            ${item.fname} ${item.lname}<br />
+            <b>เลขที่เอกสารสิทธิ์/เลขทะเบียนเกษตกร</b><br />
+            ${item.field_no}<br />
+            <b>ที่อยู่</b><br />
+            ต.${item.tambon_t} อ.${item.amphoe_t} จ.${item.province_t}
+            
+            </div>
+            `
 
             // Polygon
             if(item.geojson.type.toString() === "Polygon" || item.geojson.type.toString() === "MultiPolygon") {
@@ -189,13 +199,20 @@ class Fields extends React.Component {
                     "properties": {
                         "name": "Coors Field",
                         "amenity": "Baseball Stadium",
-                        "popupContent": popupContent
+                        "popupContent": popupContent,
                     },
                     "geometry": item.geojson
+                    
                 }
 
                 let polygon = L.geoJSON(geojsonFeature, {
-                    onEachFeature: onEachFeature
+                    onEachFeature: onEachFeature,
+                    valueProperty: 'incidents',
+                    style: {
+                        color: '#00FF51', // border color
+                        weight: 2,
+                        fillOpacity: 0.3
+                    },
                 })
 
                 // fitBound
@@ -207,13 +224,61 @@ class Fields extends React.Component {
                 OverlayLand.push(polygon)
             } 
         })
+        
+        lands1.map((item, key) => {
+            popupContent = `
+            <div>
+            <h5>ข้อมูลแปลง<mark>การแจ้งรายงาน</mark></h5>
+            <b>ชื่อเจ้าของแปลง</b><br />
+            ${item.fname} ${item.lname}<br />
+            <b>เลขที่เอกสารสิทธิ์/เลขทะเบียนเกษตกร</b><br />
+            ${item.field_no}<br />
+            <b>ที่อยู่</b><br />
+            ต.${item.tambon_t} อ.${item.amphoe_t} จ.${item.province_t}
+            
+            </div>`;
 
-        // ร้านธงฟ้าประชารัฐ
+            // Polygon
+            if(item.geojson.type.toString() === "Polygon" || item.geojson.type.toString() === "MultiPolygon") {
+                // console.log("log: " + item.geojson.type.toString())
+                // console.log("log: " + JSON.stringify(item.geojson))
+                geojsonFeature = {
+                    "type": "Feature",
+                    "properties": {
+                        "name": "Coors Field",
+                        "amenity": "Baseball Stadium",
+                        "popupContent": popupContent,
+                    },
+                    "geometry": item.geojson
+                    
+                }
+
+                let polygon = L.geoJSON(geojsonFeature, {
+                    onEachFeature: onEachFeature,
+                    valueProperty: 'incidents',
+                    style: {
+                        color: '#FF0000', // border color
+                        weight: 2,
+                        fillOpacity: 0.3
+                    },
+                })
+
+                // fitBound
+                polygon.on("click", function (event) {
+                    // Assuming the clicked feature is a shape, not a point marker.
+                    map.fitBounds(event.layer.getBounds());
+                });
+
+                OverlayLand1.push(polygon)
+            } 
+        })
         
 
         var list_lands = L.layerGroup(OverlayLand);
+        var list_lands1 = L.layerGroup(OverlayLand1);
         var overlayMaps = {
-            "แปลงนา": list_lands,
+            "แปลงนาที่ไม่เสียหาย": list_lands,
+            "แปลงนาที่เสียหาย": list_lands1,
             
         };
     
@@ -249,24 +314,44 @@ class Fields extends React.Component {
         
       .then(res => {
         let lands = [];
+        let lands1 =[];
         console.log(JSON.parse(res.data.Data[0].geojson).coordinates[0])
         res.data.Data.map((item, key) => {
-            lands.push({
-                geojson: JSON.parse(item.geojson),
-                field_id:item.field_id,
-                field_no:item.field_no,
-                fname:item.fname,
-                lname:item.lname,
-                field_name:item.field_name,
-                tambon_t:item.tambon_t,
-                amphoe_t:item.amphoe_t,
-                province_t:item.province_t,
-
-            })
+            if(item.havewarranty=='0'){
+                lands.push({
+                    geojson: JSON.parse(item.geojson),
+                    field_id:item.field_id,
+                    field_no:item.field_no,
+                    fname:item.fname,
+                    lname:item.lname,
+                    field_name:item.field_name,
+                    tambon_t:item.tambon_t,
+                    amphoe_t:item.amphoe_t,
+                    province_t:item.province_t,
+    
+                })
+            }
+            else if
+            (item.havewarranty=='1'){
+                lands1.push({
+                    geojson: JSON.parse(item.geojson),
+                    field_id:item.field_id,
+                    field_no:item.field_no,
+                    fname:item.fname,
+                    lname:item.lname,
+                    field_name:item.field_name,
+                    tambon_t:item.tambon_t,
+                    amphoe_t:item.amphoe_t,
+                    province_t:item.province_t,
+    
+                })
+            }
+            
             
             
         })
         this.setState({ lands: lands });
+        this.setState({ lands1: lands1 });
         console.log(this.state.lands);
     }
       )}
@@ -318,8 +403,9 @@ class Fields extends React.Component {
 
         return (
             <div className="content" style={{padding: '0px', marginTop: '62px'}}>
-                <div id="map" style={{height: 'calc(100vh - 62px)' }} />
+                <div id="map" style={{height: 'calc(100vh - 62px)' ,color:"#d55"}} />
              </div>
+             
         );
     }
 }
