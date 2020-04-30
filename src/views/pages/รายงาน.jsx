@@ -21,16 +21,11 @@ import { Tab } from "semantic-ui-react";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import Adduser from "Modals/เพิ่มผู้ใช้งาน.jsx"
-import Viewuser from "Modals/ดูข้อมูลผู้ใช้งาน.jsx"
 import ToolkitProvider, {
   Search,
   CSVExport,
 } from "react-bootstrap-table2-toolkit";
-// react plugin used to create charts
-import { Line, Bar, Doughnut } from "react-chartjs-2";
-// react plugin for creating vector maps
-import { VectorMap } from "react-jvectormap";
+
 import {  Pie } from "react-chartjs-2";
 // reactstrap components
 import {
@@ -47,15 +42,10 @@ import {
   Table,
   Row,
   Col,
+  InputGroupAddon,
 
   UncontrolledTooltip
 } from "reactstrap";
-
-import {
-
-  chartExample11,
-
-} from "variables/charts.jsx";
 
 const shownum = [
     { value: 10, label: "10" },
@@ -72,12 +62,12 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
- 
+      shownumOp: 10,
       num_war:0,
       num_warno:0,
       num_warwait:0,
-      data3:[]
- 
+      data3:[],
+      products: [],
     }
   }
   componentDidMount() {
@@ -87,8 +77,40 @@ class Dashboard extends React.Component {
     this.getNumeberwarwait();
     this.getNumeberwarno();
     this.getChart3();
+    this.getreport();
    
 }
+getreport = () => {
+  axios.get(`http://localhost:3001/api/v1/reporttable`)
+      .then(res => {
+      //console.log(res.data.Data)
+
+      this.setState({ products: res.data.Data });
+      //console.log(this.state.products)
+      })
+}
+
+handleChange = ({ selectedOption }) => {
+  this.setState({ selectedOption });
+  // console.log(`Option selected:`, selectedOption);
+};
+
+
+ShownumhandleChange = ({ shownumOp }) => {
+  this.setState({ shownumOp });
+  // console.log(`Option selected:`, shownumOp);
+};
+
+CompleteInfohandleChange = ({ completeInf }) => {
+  console.log("eiei");
+
+  this.setState({ completeInf });
+  console.log(`Option selected:`, completeInf);
+};
+
+afterSave = () => {};
+
+
 getNumeberwar = () => {
   axios.get(`http://localhost:3001/api/v1/countwarranty`, {headers: {"pid":1}})
       .then(res => {
@@ -125,6 +147,7 @@ getNumeberwarwait = () => {
   }
 
   render() {
+    
     var n1=parseInt(this.state.num_war)
     var n2=parseInt(this.state.num_warno)
     var n3=parseInt(this.state.num_warwait)
@@ -187,8 +210,185 @@ getNumeberwarwait = () => {
         }
       }
     };
-    
+    const { SearchBar } = Search;
 
+    const columns = [
+      {
+        dataField: "provincial",
+        text: "ภาค",
+        sort: true,
+        align :'center',
+        headerAlign :'center',
+        headerStyle:{
+          width : 200
+        }
+      },
+      {
+        dataField: "province_t",
+        sort: true,
+        text: "จังหวัด",
+        editable: false,
+        align :'center',
+        headerAlign :'center',
+        headerStyle:{
+          width : 200
+        }
+      },
+      {
+        dataField: "disaster_nameth",
+        sort: true,
+        text: "ประเภทภัย",
+        editable: false,
+        align :'center',
+        headerAlign :'center',
+        headerStyle:{
+          width : 200
+        }
+      },
+      {
+        dataField: "count",
+        sort: true,
+        text: "ทั้งหมด",
+        editable: false,
+        align :'center',
+        headerAlign :'center',
+        
+      },
+      
+      {
+        dataField: "pass",
+        sort: true,
+        text: "ยืนยัน",
+        editable: false,
+        align :'center',
+        headerAlign :'center',
+       
+      },
+      {
+        dataField: "waiting",
+        sort: true,
+        text: "รอการยืนยัน",
+        editable: false,
+        align :'center',
+        headerAlign :'center',
+       
+      },
+      {
+        dataField: "missingdata",
+        sort: true,
+        text: "ข้อมูลไม่ครบ",
+        editable: false,
+        align :'center',
+        headerAlign :'center',
+      },
+      {
+        dataField: "fail",
+        sort: true,
+        text: "ไม่ยืนยัน",
+        editable: false,
+        align :'center',
+        headerAlign :'center',
+      },
+    
+    ];
+
+    
+    const searchStyle = { width: 250 }; // search bar style
+
+    const panes = [
+        
+      {
+        menuItem:
+          "สถิติการยื่นขอความช่วยเหลือรายภูมิภาคของไทย" ,
+        render: () => (
+          <Tab.Pane>
+            {" "}
+            <ToolkitProvider
+              keyField="id"
+              data={this.state.products}
+              columns={columns}
+              search
+              exportCSV={{
+                fileName: "custom.csv",
+                exportAll: false,
+              }}
+            >
+              {(props) => (
+                <div>
+                  <Row>
+                  <Col sm="6">
+                  <InputGroupAddon addonType="append">
+                    <h4 style={{ paddingRight: 7 }}> ค้นหาจากตาราง </h4>
+                    <i
+                      style={{ paddingTop: 3, paddingRight: 7 }}
+                      className="nc-icon nc-zoom-split"
+                    />
+                    
+                  </InputGroupAddon>
+                  <SearchBar style={searchStyle} {...props.searchProps} />
+                  </Col>
+                  <Col sm="6" align="right">
+                  <ExportCSVButton {...props.csvProps}>
+                        Export CSV
+                      </ExportCSVButton>
+                  </Col>
+                  </Row>
+                  
+                  <hr />
+                  <BootstrapTable
+                  
+                    onDataSizeChange={this.handleDataChange}
+                    striped
+                    pagination={paginationFactory()}
+                    cellEdit={cellEditFactory({
+                      mode: "click",
+                      blurToSave: true,
+                      afterSaveCell: (oldValue, newValue, row, column) => {
+                        // let ind = this.state.products.findIndex(function (
+                        //   item,
+                        //   i
+                        // ) {
+                        // console.log("=====> ", row.id, row.rightInfo);
+                        this.setState((prevState) => ({
+                          row: {
+                            ...prevState.row,
+                            [row.manageuser]: newValue,
+                          },
+                        }));
+                        console.log("=====> ", row.id, row.manageuser);
+                        // });
+                        // this.state.products.rightInfo[row] = newValue;
+                        // this.state.products[ind] = newValue;
+                        // console.log("old ==>", row.id);
+                        // this.setState({ rightInfo: newValue });
+                      },
+                    })}
+                    {...props.baseProps}
+                  />
+                  <tr>
+                    <td>
+                      แสดงจากข้อมูลทั้งหมด {this.state.products.length} แถว
+                    </td>
+                   
+                  </tr>
+                </div>
+              )}
+              {/* <BootstrapTable
+              responsive
+              striped
+              pagination={paginationFactory()}
+              keyField="id"
+              data={products}
+              columns={columns}
+              
+            /> */}
+            </ToolkitProvider>
+          </Tab.Pane>
+        ),
+      },
+    ]
+
+    
     return (
       <>
         <div className="content">
@@ -346,9 +546,12 @@ getNumeberwarwait = () => {
                 <CardHeader>
                   <CardTitle >
                   <h2 className="big-title5">สถิติการยื่นขอความช่วยเหลือรายภูมิภาคของไทย</h2>
-
+                  
                   </CardTitle>
                 </CardHeader>
+                <CardBody className="table-full-width table-hover">
+                  <Tab panes={panes} />
+                </CardBody>
             </Card>
             </Col>
           </Row>

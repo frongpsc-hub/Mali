@@ -483,7 +483,7 @@ getWebUserinfo = () => {
                   />
                   <tr>
                     <td>
-                      แสดงจากข้อมูลทั้งหมด {this.state.products2  .length} แถว
+                      แสดงจากข้อมูลทั้งหมด {this.state.products2.length} แถว
                     </td>
                     <td style={{ paddingLeft: 550, paddingBottom: 35 }}>
                       <ExportCSVButton {...props.csvProps}>
