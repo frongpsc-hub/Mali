@@ -23,7 +23,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
 import logo from "assets/img/Artboard 17.png";
 import logo2 from "assets/img/Artboard 15.png";
-
+import {routes3} from "routes.js";
 
 var ps;
 
@@ -31,6 +31,7 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getCollapseStates(props.routes);
+    this.state = this.getCollapseStates2(routes3);
   }
   // this creates the intial state of this component based on the collapse routes
   // that it gets through this.props.routes
@@ -48,6 +49,20 @@ class Sidebar extends React.Component {
     });
     return initialState;
   };
+  getCollapseStates2 = routes3 => {
+    let initialState2 = {};
+    routes3.map((prop, key) => {
+      if (routes3.collapse) {
+        initialState2 = {
+          [routes3.state]: this.getCollapseInitialState(routes3.views),
+          ...this.getCollapseStates(routes3.views),
+          ...initialState2
+        };
+      }
+      return null;
+    });
+    return initialState2;
+  };
   // this verifies if any of the collapses should be default opened on a rerender of this component
   // for example, on the refresh of the page,
   // while on the src/views/forms/RegularForms.jsx - route /admin/regular-forms
@@ -56,6 +71,16 @@ class Sidebar extends React.Component {
       if (routes[i].collapse && this.getCollapseInitialState(routes[i].views)) {
         return true;
       } else if (window.location.pathname.indexOf(routes[i].path) !== -1) {
+        return true;
+      }
+    }
+    return false;
+  }
+  getCollapseInitialState2(routes) {
+    for (let i = 0; i < routes.length; i++) {
+      if (routes3[i].collapse && this.getCollapseInitialState2(routes3[i].views)) {
+        return true;
+      } else if (window.location.pathname.indexOf(routes3[i].path) !== -1) {
         return true;
       }
     }
@@ -108,6 +133,7 @@ class Sidebar extends React.Component {
           </li>
         );
       }
+     
       return (
         <li className={this.activeRoute(prop.layout + prop.path)} key={key}>
           <NavLink to={prop.layout + prop.path} activeClassName="">
@@ -130,6 +156,9 @@ class Sidebar extends React.Component {
   // verifies if routeName is the one active (in browser input)
   activeRoute = routeName => {
     return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
+  };
+  activeRoute3 = routeName => {
+    return routes3.location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
   componentDidMount() {
     // if you are using a Windows Machine, the scrollbars will have a Mac look

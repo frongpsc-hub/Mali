@@ -43,8 +43,32 @@ import VectorMap from "views/maps/VectorMap.jsx";
 import Widgets from "views/Widgets.jsx";
 import Wizard from "views/forms/Wizard.jsx";
 import Fields from "views/pages/Map.jsx";
-
+const routes2 =[
+  {
+    path: "/login",
+    name: "Login",
+    mini: "L",
+    component: Login,
+    layout: "/auth"
+  }
+]
+const routes3 =[
+  {
+    path: "/user-profile",
+    name: "UserProfile",
+  
+    component: UserProfile,
+    layout: "/admin"
+  }
+]
 const routes = [
+  {
+    path: "/user-profile",
+    name: "ข้อมูลผู้ใช้งาน",
+    icon: "nc-icon nc-single-02",
+    component: UserProfile,
+    layout: "/admin"
+  },
   {
     path: "/dashboard",
     name: "หน้าหลัก",
@@ -53,50 +77,13 @@ const routes = [
     layout: "/admin"
   },
   {
-    collapse: true,
+  
     name: "การจัดการผู้ใช้งาน",
     icon: "nc-icon nc-badge",
     state: "pagesCollapse",
-    path: "/timeline",
+    path: "/การจัดการผู้ใช้งาน",
     component: Timeline,
     layout: "/admin",
-    views: [
-      {
-        path: "/timeline",
-        name: "Timeline",
-        mini: "T",
-        component: Timeline,
-        layout: "/admin"
-      },
-      {
-        path: "/login",
-        name: "Login",
-        mini: "L",
-        component: Login,
-        layout: "/auth"
-      },
-      {
-        path: "/register",
-        name: "Register",
-        mini: "R",
-        component: Register,
-        layout: "/auth"
-      },
-      {
-        path: "/lock-screen",
-        name: "LockScreen",
-        mini: "LS",
-        component: LockScreen,
-        layout: "/auth"
-      },
-      {
-        path: "/user-profile",
-        name: "UserProfile",
-        mini: "UP",
-        component: UserProfile,
-        layout: "/admin"
-      }
-    ]
   },
   {
     
@@ -229,4 +216,5 @@ const routes = [
   // }
 ];
 
-export default routes;
+export {routes,routes2,routes3};
+

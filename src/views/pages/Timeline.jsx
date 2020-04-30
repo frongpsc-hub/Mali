@@ -79,6 +79,11 @@ export default class RegularTables extends React.Component {
 
 }
 
+componentWillUpdate(){
+
+    this.getWebUserinfo();
+}
+
 getAppUserinfo = () => {
   axios.get(`http://localhost:3001/api/v1/manageuser`)
       .then(res => {
@@ -128,7 +133,7 @@ getWebUserinfo = () => {
   };
   afterSave = () => {};
   render() {
-    const { selectedOption } = this.state;
+    const { products,products2 } = this.state;
     const { shownumOp } = this.state;
     const { completeInf } = this.state;
 
@@ -329,13 +334,13 @@ getWebUserinfo = () => {
         
       {
         menuItem:
-          "ผู้ใช้งานบนแอปพลิเคชั่น" + "(" + this.state.products.length + ")",
+          "ผู้ใช้งานบนแอปพลิเคชั่น" + "(" + products.length + ")",
         render: () => (
           <Tab.Pane>
             {" "}
             <ToolkitProvider
               keyField="id"
-              data={this.state.products}
+              data={products}
               columns={columns}
               search
               exportCSV={{
@@ -387,7 +392,7 @@ getWebUserinfo = () => {
                   />
                   <tr>
                     <td>
-                      แสดงจากข้อมูลทั้งหมด {this.state.products.length} แถว
+                      แสดงจากข้อมูลทั้งหมด {products.length} แถว
                     </td>
                     <td style={{ paddingLeft: 550, paddingBottom: 35 }}>
                       <ExportCSVButton {...props.csvProps}>
@@ -412,7 +417,7 @@ getWebUserinfo = () => {
       },
       {
         menuItem:
-          "ผู้ใช้งานบนเว็บไซต์" + "(" + this.state.products2.length + ")",
+          "ผู้ใช้งานบนเว็บไซต์" + "(" + products2.length + ")",
         render: () => (
           <Tab.Pane>
             {" "}
@@ -483,7 +488,7 @@ getWebUserinfo = () => {
                   />
                   <tr>
                     <td>
-                      แสดงจากข้อมูลทั้งหมด {this.state.products2.length} แถว
+                      แสดงจากข้อมูลทั้งหมด {products2.length} แถว
                     </td>
                     <td style={{ paddingLeft: 550, paddingBottom: 35 }}>
                       <ExportCSVButton {...props.csvProps}>

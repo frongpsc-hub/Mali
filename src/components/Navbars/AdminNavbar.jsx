@@ -32,10 +32,11 @@ import {
   NavbarBrand,
   Navbar,
   NavItem,
-  NavLink,
+  
   Nav,
   Container
 } from "reactstrap";
+import { NavLink } from "react-router-dom";
 
 class AdminNavbar extends React.Component {
   constructor(props) {
@@ -193,12 +194,14 @@ class AdminNavbar extends React.Component {
                     </p>
                   </DropdownToggle>
                   <DropdownMenu aria-labelledby="navbarDropdownMenuLink" right>
+                    <NavLink to="/admin/user-profile">
                     <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
+                      href="http://localhost:3000/admin/user-profile"
+                      
                     >
                       ข้อมูลผู้ใช้งาน
                     </DropdownItem>
+                    </NavLink>
                     <DropdownItem
                       href="#pablo"
                       onClick={e => e.preventDefault()}

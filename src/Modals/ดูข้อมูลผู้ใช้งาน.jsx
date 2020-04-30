@@ -63,6 +63,7 @@ class Viewuser extends Component {
     this.handleClickOpen=this.handleClickOpen.bind(this)
     this.handleClickClose=this.handleClickClose.bind(this)
     this.edituser=this.edituser.bind(this)
+    this.deluser=this.deluser.bind(this)
   }
   componentDidMount() {
 }
@@ -90,6 +91,7 @@ class Viewuser extends Component {
         })
         this.getProbranch();
         this.getbranch();
+        
        if(res.data.Data[0].role_name == "ผู้ดูแลระบบ"){
         this.setState({
           position:'A',
@@ -156,6 +158,22 @@ class Viewuser extends Component {
       
       }
     
+      deluser = () =>{
+        var bodyFormData = new FormData();
+        bodyFormData.set('uid', this.props.uid);
+        console.log(bodyFormData)
+        axios({
+          method: 'post',
+          url: 'http://localhost:3001/api/v1/delwebuser',
+          data: {"uid":this.props.uid}
+      })
+      .then(function (response) {
+          console.log(response);
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+      }
      
     
     handleClickClose = () =>{
@@ -527,7 +545,7 @@ class Viewuser extends Component {
       <i className="nc-icon nc-settings" />
         แก้ไข
       </Button>
-      <Button size="sm" color="danger" >
+      <Button size="sm" color="danger" onClick={this.deluser}>
       <i className="nc-icon nc-simple-remove" />
         ลบ
       </Button>
