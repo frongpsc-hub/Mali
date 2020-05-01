@@ -31,8 +31,7 @@ import { Tab } from "semantic-ui-react";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import Adduser from "Modals/เพิ่มผู้ใช้งาน.jsx"
-import Viewuser from "Modals/ดูข้อมูลผู้ใช้งาน.jsx"
+
 import ToolkitProvider, {
   Search,
   CSVExport,
@@ -216,14 +215,26 @@ export default class RegularTables extends React.Component {
             >
               {(props) => (
                 <div>
+                 <Row>
+                  <Col sm="6">
                   <InputGroupAddon addonType="append">
                     <h4 style={{ paddingRight: 7 }}> ค้นหาจากตาราง </h4>
+                    
                     <i
                       style={{ paddingTop: 3, paddingRight: 7 }}
                       className="nc-icon nc-zoom-split"
+                      
                     />
+                    
                   </InputGroupAddon>
                   <SearchBar style={searchStyle} {...props.searchProps} />
+                  </Col>
+                  <Col sm="6" align="right">
+                  <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+                  เพิ่มคำถาม
+                </Button>
+                  </Col>
+                  </Row>
 
                   <hr />
                   <BootstrapTable
