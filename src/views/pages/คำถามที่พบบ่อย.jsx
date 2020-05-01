@@ -64,34 +64,23 @@ export default class RegularTables extends React.Component {
     shownumOp: 10,
     completeInf: "รอการอนุมัติ",
     products: [
-      {
-        id: 993,
-        question: "ryuntp",
-        ans: "0873269511",
-        editdate: "2/2/2020",
-        editby: "3",
-        details: 
-        <Button size="sm" variant="outlined" color="primary">
-            ดูข้อมูล
-        </Button>
-        ,
-      },
+      
       {
         id: 1,
-        question: "suthep",
-        ans: "0837272626",
-        editdate: "suthep@hotmail.com",
-        editby: "4",
+        question: "ฉันจำรหัสผ่านไม่ได้",
+        ans: "ท่านสามารถเปลียนรหัสผ่านได้ทีหน้าลงชือเข้าสู่ระบบ  โดยกดคลิกที ลืมรหัสผ่าน จากนันทําการกรอกอีเมล์...",
+        editdate: "7-เมษายน-2563",
+        editby: "น้องมะลิซ้อน ประกันวินาศภัย",
         details: <Button size="sm" variant="outlined" color="primary">
         ดูข้อมูล
     </Button>,
       },
       {
-        id: 4,
-        question: "mali",
-        ans: "0855555555",
-        editdate: "mali@hotmail.com",
-        editby: "2",
+        id: 2,
+        question: "เข้าสู้ระบบไม่ได้",
+        ans: "ท่านสามารถติดต่อผู้ดูแลระบบได้ทีเมนู ติดต่อเรา โดย กรอกข้อมูล และรายละเอียดลงในแบบฟอร์มและกด..",
+        editdate: "7-เมษายน-2563",
+        editby: "น้องมะลิซ้อน ประกันวินาศภัย",
         details: <Button size="sm" variant="outlined" color="primary">
         ดูข้อมูล
     </Button>
@@ -145,7 +134,7 @@ export default class RegularTables extends React.Component {
         align :'center',
         headerAlign :'center',
         headerStyle:{
-          width : 250
+          width : 150
         }
       },
       {
@@ -167,7 +156,7 @@ export default class RegularTables extends React.Component {
         align :'center',
         headerAlign :'center',
         headerStyle:{
-          width : 100
+          width : 150
         }
       },
       {

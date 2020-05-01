@@ -73,8 +73,9 @@ export default class RegularTables extends React.Component {
     this.getNowar();
     this.getWaitwar();
     
+    
+  }
 
-}
   getAllwar = () => {
     axios.get(`http://localhost:3001/api/v1/allwarrantytable`)
         .then(res => {
@@ -92,35 +93,35 @@ export default class RegularTables extends React.Component {
    getPasswar = () => {
     axios.get(`http://localhost:3001/api/v1/warrantytable`, {headers: {"pid": 1}})
         .then(res => {
-        console.log(res.data)
+        //console.log(res.data)
         const product2 = res.data.Data.map(p => {
-          p.details = <div><CustomizedDialogs uid={p.warranty_id}/></div>
+          p.details = <div><CustomizedDialogs uid={p.warranty_id} status={p.status_name}/></div>
           return p
         })
   
   
         this.setState({ products2: product2 });
-        console.log(this.state.products2)
+        //(this.state.products2)
         })
   }
   getNowar = () => {
     axios.get(`http://localhost:3001/api/v1/warrantytable`, {headers: {"pid": 2}})
         .then(res => {
-        console.log(res.data)
+        //console.log(res.data)
         const product3 = res.data.Data.map(p => {
-          p.details = <div><CustomizedDialogs uid={p.warranty_id}/></div>
+          p.details = <div><CustomizedDialogs uid={p.warranty_id} status={p.status_name}/></div>
           return p
         })
   
   
         this.setState({ products3: product3 });
-        console.log(this.state.products3)
+        //console.log(this.state.products3)
         })
   }
   getWaitwar = () => {
     axios.get(`http://localhost:3001/api/v1/warrantytable`, {headers: {"pid": 3}})
         .then(res => {
-        console.log(res.data)
+        //console.log(res.data)
         const product4 = res.data.Data.map(p => {
           p.details = <div><CustomizedDialogs uid={p.warranty_id}/></div>
           return p
@@ -128,7 +129,7 @@ export default class RegularTables extends React.Component {
   
   
         this.setState({ products4: product4 });
-        console.log(this.state.products4)
+        //console.log(this.state.products4)
         })
   }
   handleChange = ({ selectedOption }) => {
@@ -344,7 +345,7 @@ export default class RegularTables extends React.Component {
                           [row.rightInfo]: newValue,
                         },
                       }));
-                      console.log("=====> ", row.id, row.rightInfo);
+                      //console.log("=====> ", row.id, row.rightInfo);
                       // });
                       // this.state.products.rightInfo[row] = newValue;
                       // this.state.products[ind] = newValue;

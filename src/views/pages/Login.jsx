@@ -87,15 +87,17 @@ class Login extends React.Component {
                         
                   </CardBody>
                   <CardFooter>
+                  <NavLink to="/admin/dashboard">
                     <Button
                       block
                       className="btn-round mb-3"
                       color="success"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
+                      
+                      
                     >
                       เข้าสู่ระบบ
                     </Button>
+                    </NavLink>
                   </CardFooter>
                 </Card>
               </Form>
@@ -105,7 +107,7 @@ class Login extends React.Component {
         <div
           className="full-page-background"
           style={{
-            backgroundImage: `url(${require("assets/img/bg/fabio-mangione.jpg")})`
+            backgroundImage: `url(${require("assets/img/LoginImg.png")})`
           }}
         />
       </div>

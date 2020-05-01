@@ -53,6 +53,7 @@ class Viewuser extends Component {
       branch_pro_name:"",
       branch_id:"",
       branch_pro_id:"",
+      pro_id2:"",
       probranch:[],
       branch:[]
     }
@@ -64,6 +65,8 @@ class Viewuser extends Component {
     this.handleClickClose=this.handleClickClose.bind(this)
     this.edituser=this.edituser.bind(this)
     this.deluser=this.deluser.bind(this)
+    this.handleChange=this.handleChange.bind(this)
+    this.handleSubmit=this.handleSubmit.bind(this)
   }
   componentDidMount() {
 }
@@ -73,7 +76,7 @@ class Viewuser extends Component {
     })
     }
     handleClickOpen = () =>{
- 
+ console.log(this.props.uid)
       axios.get(`http://localhost:3001/api/v1/eachwebusers`, {headers: {"pid": this.props.uid}})
       .then(res => {
         console.log(res.data.Data[0])
@@ -94,8 +97,9 @@ class Viewuser extends Component {
         
        if(res.data.Data[0].role_name == "ผู้ดูแลระบบ"){
         this.setState({
-          position:'A',
+          position:'1',
           showModal:true,
+          showEdit:false,
           role_name:res.data.Data[0].role_name
         })
         //console.log(res.data.Data[0].role_name)
@@ -106,8 +110,9 @@ class Viewuser extends Component {
       
       else if(res.data.Data[0].role_name == "ผู้ใช้งานทั่วไป"){
         this.setState({
-          position:'C',
+          position:'3',
           showModal:true,
+          showEdit:false,
           role_name:res.data.Data[0].role_name
         })
         //console.log(res.data.Data[0].role_name)
@@ -116,7 +121,7 @@ class Viewuser extends Component {
       }
       else
       {
-        this.setState({position:'B', showModal:true,role_name:res.data.Data[0].role_name})
+        this.setState({position:'2', showModal:true,showEdit:false,role_name:res.data.Data[0].role_name})
       }
        
       })
@@ -149,23 +154,27 @@ class Viewuser extends Component {
     onChange2(event){
       axios.get(`http://localhost:3001/api/v1/branch` ,{headers: {"pid": event.target.value}})
           .then(res => {
-          console.log(res.data)
+          console.log(res.data.Data)
           this.setState({
-            branch:res.data.Data
+            branch:res.data.Data,
+            branch_id:res.data.Data[0].branch_id
           })
+          this.setState.
           console.log(this.state.branch)
+          
+          
           })
-      
+          
       }
     
       deluser = () =>{
-        var bodyFormData = new FormData();
-        bodyFormData.set('uid', this.props.uid);
-        console.log(bodyFormData)
+        
+        const datar = {uid:this.props.uid}
+        console.log("rr ==> ",datar)
         axios({
           method: 'post',
           url: 'http://localhost:3001/api/v1/delwebuser',
-          data: {"uid":this.props.uid}
+          data: datar
       })
       .then(function (response) {
           console.log(response);
@@ -182,39 +191,75 @@ class Viewuser extends Component {
         showEdit:false
       })
     }
+    handleChange(event) {
+      const name = event.target.name;
+      const value = event.target.value;
+  
+      this.setState({
+        [name]: value
+      })  
+
+      console.log(this.state.position)
+      
+    }
+    handleSubmit = () => {
+      
+      const datar = {uid:this.props.uid, org_id:this.state.position, fname:this.state.fname, 
+                      lname:this.state.lname, tel:this.state.tel, email:this.state.email,
+                      ubranch_id:this.state.branch_id
+                    }
+        axios({
+          method: 'post',
+          url: 'http://localhost:3001/api/v1/editwebuser',
+          data: datar
+      })
+      console.log(datar)
+      this.setState({
+        showEdit:false,
+        showModal:false,
+      })
+      
+    }
     edituser = () =>{
         this.setState({
           showModal:false,
           showEdit:true,
 
         })
+        
         axios.get(`http://localhost:3001/api/v1/eachwebusers`, {headers: {"pid": this.props.uid}})
-        .then(res => {
-          console.log(res.data.Data[0])
-         this.setState({
-           role_name :res.data.Data[0].role_name,
-           fname:res.data.Data[0].fname,
-           lname:res.data.Data[0].lname,
-           tel:res.data.Data[0].tel,
-           email:res.data.Data[0].email,
-           role_name:res.data.Data[0].role_name,
-           branch_name:res.data.Data[0].branch_name,
-           branch_pro_name:res.data.Data[0].branch_pro_name
-          })
-         if(res.data.Data[0].role_name == "ผู้ดูแลระบบ"){
-          this.setState({
-            position:'A',
-            role_name:res.data.Data[0].role_name
-          })
-          //console.log(res.data.Data[0].role_name)
-          //console.log(this.state.position)
+      .then(res => {
+        console.log(res.data.Data[0])
+       this.setState({
+         role_name :res.data.Data[0].role_name,
+         fname:res.data.Data[0].fname,
+         lname:res.data.Data[0].lname,
+         tel:res.data.Data[0].tel,
+         email:res.data.Data[0].email,
+         role_name:res.data.Data[0].role_name,
+         branch_name:res.data.Data[0].branch_name,
+         branch_pro_name:res.data.Data[0].branch_pro_name,
+         branch_id:res.data.Data[0].branch_id,
+         branch_pro_id:res.data.Data[0].branch_pro_id,
+        })
+        this.getProbranch();
+        this.getbranch();
+        
+       if(res.data.Data[0].role_name == "ผู้ดูแลระบบ"){
+        this.setState({
+          position:'1',
+          
+          role_name:res.data.Data[0].role_name
+        })
+        //console.log(res.data.Data[0].role_name)
+        //console.log(this.state.position)
           
           
         }
         
         else if(res.data.Data[0].role_name == "ผู้ใช้งานทั่วไป"){
           this.setState({
-            position:'C',
+            position:'3',
             role_name:res.data.Data[0].role_name
           })
           //console.log(res.data.Data[0].role_name)
@@ -223,7 +268,7 @@ class Viewuser extends Component {
         }
         else
         {
-          this.setState({position:'B', role_name:res.data.Data[0].role_name})
+          this.setState({position:'2', role_name:res.data.Data[0].role_name})
         }
          
         })
@@ -231,7 +276,10 @@ class Viewuser extends Component {
         
       
       }
+
+      
   render(){
+    console.log(this.state.fname)
     const uid=this.props.uid
     const { classes } = this.props;
     const DialogTitle = withStyles(styles)((props) => {
@@ -251,7 +299,7 @@ class Viewuser extends Component {
     const position = this.state.position;
     console.log(this.state.position)
     let form;
-    if (position == 'A' || position == 'C')
+    if (position == '1' || position == '3')
     {
       
       form =
@@ -394,7 +442,7 @@ class Viewuser extends Component {
 
     const positionedit = this.state.position;
     let formedit;
-    if (positionedit == 'A' || position == 'C')
+    if (positionedit == '1' || position == '3')
     {
         formedit =
       <div>
@@ -405,8 +453,10 @@ class Viewuser extends Component {
           <FormGroup>
             <label>ชื่อ</label>
             <Input
-            
+              name="fname"
+              value={this.state.fname}
               defaultValue={this.state.fname}
+              onChange={this.handleChange}
               placeholder="ชื่อ"
               type="text"
             />
@@ -417,7 +467,10 @@ class Viewuser extends Component {
             <label>นามสกุล</label>
             <Input
             
+              name="lname"
+              value={this.state.lname}
               defaultValue={this.state.lname}
+              onChange={this.handleChange}
               placeholder="นามสกุล"
               type="text"
             />
@@ -431,7 +484,9 @@ class Viewuser extends Component {
           <FormGroup>
             <label>เบอร์โทร</label>
             <Input
-            
+              name="tel"
+              value={this.state.tel}
+              onChange={this.handleChange}
               defaultValue={this.state.tel}
               placeholder="เบอร์โทร"
               type="text"
@@ -443,7 +498,10 @@ class Viewuser extends Component {
             <label>อีเมล</label>
             <Input
             
+              name="email"
+              value={this.state.email}
               defaultValue={this.state.email}
+              onChange={this.handleChange}
               placeholder="อีเมล"
               type="text"
             />
@@ -464,8 +522,10 @@ class Viewuser extends Component {
           <FormGroup>
             <label>ชื่อ</label>
             <Input
-            
-              defaultValue={this.state.name}
+              name="fname"
+              value={this.state.fname}
+              defaultValue={this.state.fname}
+              onChange={this.handleChange}
               placeholder="ชื่อ"
               type="text"
             />
@@ -475,8 +535,10 @@ class Viewuser extends Component {
           <FormGroup>
             <label>นามสกุล</label>
             <Input
-            
+              name="lname"
+              value={this.state.lname}
               defaultValue={this.state.lname}
+              onChange={this.handleChange}
               placeholder="นามสกุล"
               type="text"
             />
@@ -490,8 +552,10 @@ class Viewuser extends Component {
           <FormGroup>
             <label>เบอร์โทร</label>
             <Input
-              
+              name="tel"
+              value={this.state.tel}
               defaultValue={this.state.tel}
+              onChange={this.handleChange}
               placeholder="เบอร์โทร"
               type="text"
             />
@@ -501,8 +565,10 @@ class Viewuser extends Component {
           <FormGroup>
             <label>อีเมล</label>
             <Input
-            
+              name="email"
+              value={this.state.email}
               defaultValue={this.state.email}
+              onChange={this.handleChange}
               placeholder="อีเมล"
               type="text"
             />
@@ -522,7 +588,8 @@ class Viewuser extends Component {
         <Col className="pl-1" md="6">
           <FormGroup>
             <label>สาขา ธ.ก.ส.</label>
-            <Input type="select" name="select" id="exampleSelect" defaultValue={this.state.branch_id}>
+            <Input type="select" name="select" id="exampleSelect" defaultValue={this.state.branch_id} name="branch_id"
+              value={this.state.branch_id} onChange={this.handleChange}>
               {this.state.branch.map((p) => <option key={p.branch_id} value={p.branch_id}>{p.branch_name}</option>)}     
             </Input>
           </FormGroup>
@@ -607,9 +674,9 @@ class Viewuser extends Component {
                         <FormGroup>
                           <label>สิทธิ์ผู้ใช้งาน</label>
                           <Input type="select" name="select" id="exampleSelect" onChange={this.onChange} defaultValue={this.state.position} disabled>
-                            <option value='A'>ผู้ดูแลระบบ</option>
-                            <option value='B'>เจ้าหน้าที่</option>
-                            <option value='C'>ผู้ใช้งานทั่วไป</option>
+                            <option value='1'>ผู้ดูแลระบบ</option>
+                            <option value='2'>เจ้าหน้าที่</option>
+                            <option value='3'>ผู้ใช้งานทั่วไป</option>
                             
                         </Input>
                         </FormGroup>
@@ -699,9 +766,9 @@ class Viewuser extends Component {
                         <FormGroup>
                           <label>สิทธิ์ผู้ใช้งาน</label>
                           <Input type="select" name="select" id="exampleSelect" onChange={this.onChange} defaultValue={this.state.position}>
-                            <option value='A'>ผู้ดูแลระบบ</option>
-                            <option value='B'>เจ้าหน้าที่</option>
-                            <option value='C'>ผู้ใช้งานทั่วไป</option>
+                            <option value='1'>ผู้ดูแลระบบ</option>
+                            <option value='2'>เจ้าหน้าที่</option>
+                            <option value='3'>ผู้ใช้งานทั่วไป</option>
                             
                         </Input>
                         </FormGroup>
@@ -726,7 +793,7 @@ class Viewuser extends Component {
           ยกเลิก
         </Button>
 
-        <Button  onClick={() => this.handleClickClose()}  color='success'>
+        <Button  onClick={() => this.handleSubmit()}  color='success'>
          บันทึก
         </Button>
 

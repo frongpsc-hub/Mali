@@ -41,16 +41,36 @@ class Adduser extends Component {
     super()
 
     this.state = {
-      position :'A',
+      position :'1',
       showModal:false,
       probranch:[],
-      branch:[]
+      branch:[],
+      org_id:"",
+      fname:"",
+      lname:"",
+      tel:"",
+      email:"",
+      ubranch_id:"101",
+      password:"",
+      conpass:""
       
     }
     this.onChange=this.onChange.bind(this)
     this.onChange2=this.onChange2.bind(this)
     this.handleClickOpen=this.handleClickOpen.bind(this)
     this.handleClickClose=this.handleClickClose.bind(this)
+    this.handleChange=this.handleChange.bind(this)
+  }
+  handleChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState({
+      [name]: value
+    })  
+
+    console.log(this.state.ubranch_id)
+    
   }
     onChange(event){
     this.setState({
@@ -60,7 +80,7 @@ class Adduser extends Component {
     handleClickOpen = () =>{
       this.setState({
         showModal:true,
-        position : 'A'
+        position : '1'
       })
       this.getProbranch();
     }
@@ -69,9 +89,21 @@ class Adduser extends Component {
           .then(res => {
           console.log(res.data)
           this.setState({
-            probranch:res.data.Data
+            probranch:res.data.Data,
+            
           })
           console.log(this.state.probranch)
+          
+          })
+    }
+    getbranch = () => {
+      axios.get(`http://localhost:3001/api/v1/branch`,{headers: {"pid": this.state.branch_pro_id}})
+          .then(res => {
+          console.log(res.data)
+          this.setState({
+            branch:res.data.Data
+          })
+          console.log(this.state.branch)
           
           })
     }
@@ -80,7 +112,8 @@ class Adduser extends Component {
           .then(res => {
           console.log(res.data)
           this.setState({
-            branch:res.data.Data
+            branch:res.data.Data,
+            ubranch_id:res.data.Data[0].branch_id
           })
           console.log(this.state.branch)
           })
@@ -88,10 +121,48 @@ class Adduser extends Component {
       }
     handleClickClose = () =>{
       this.setState({
-        showModal:false
+        position :'1',
+      showModal:false,
+      probranch:[],
+      branch:[],
+      org_id:"",
+      fname:"",
+      lname:"",
+      tel:"",
+      email:"",
+      ubranch_id:"101",
+      password:"",
+      conpass:""
       })
     }
-    
+    handleSubmit = () => {
+      
+      const datar = {org_id:this.state.position, fname:this.state.fname, 
+                      lname:this.state.lname, tel:this.state.tel, email:this.state.email,
+                      ubranch_id:this.state.ubranch_id,passwd:this.state.password,
+                    }
+        axios({
+          method: 'post',
+          url: 'http://localhost:3001/api/v1/addwebuser',
+          data: datar
+      })
+      console.log(datar)
+      this.setState({
+          position :'1',
+        showModal:false,
+        probranch:[],
+        branch:[],
+        org_id:"",
+        fname:"",
+        lname:"",
+        tel:"",
+        email:"",
+        ubranch_id:"101",
+        password:"",
+        conpass:""
+        })
+      }
+   
   render(){
     const { classes } = this.props;
     const DialogTitle = withStyles(styles)((props) => {
@@ -110,7 +181,7 @@ class Adduser extends Component {
 
     const position = this.state.position;
     let form;
-    if (position == 'A')
+    if (position == '1' || position == '3')
     {
       form =
       <div>
@@ -121,9 +192,12 @@ class Adduser extends Component {
           <FormGroup>
             <label>ชื่อ</label>
             <Input
-              defaultValue=""
+              value={this.state.fname}
+              defaultValue={this.state.fname}
+              onChange={this.handleChange}
               placeholder="ชื่อ"
               type="text"
+              name="fname"
             />
           </FormGroup>
         </Col>
@@ -132,6 +206,9 @@ class Adduser extends Component {
             <label>นามสกุล</label>
             <Input
               defaultValue=""
+              name="lname"
+              value={this.state.lname}
+              onChange={this.handleChange}
               placeholder="นามสกุล"
               type="text"
             />
@@ -145,6 +222,9 @@ class Adduser extends Component {
           <FormGroup>
             <label>เบอร์โทร</label>
             <Input
+              name="tel"
+              value={this.state.tel}
+              onChange={this.handleChange}
               defaultValue=""
               placeholder="เบอร์โทร"
               type="text"
@@ -155,9 +235,12 @@ class Adduser extends Component {
           <FormGroup>
             <label>อีเมล</label>
             <Input
-              defaultValue=""
-              placeholder="อีเมล"
-              type="text"
+               name="email"
+               value={this.state.email}
+               defaultValue=""
+               onChange={this.handleChange}
+               placeholder="อีเมล"
+               type="text"
             />
           </FormGroup>
         </Col>
@@ -169,8 +252,11 @@ class Adduser extends Component {
             <label>รหัสผ่าน</label>
             <Input
             type="password"
-              defaultValue=""
               placeholder="รหัสผ่าน"
+              name="password"
+               value={this.state.password}
+               defaultValue=""
+               onChange={this.handleChange}
               
             />
           </FormGroup>
@@ -180,8 +266,11 @@ class Adduser extends Component {
             <label>ยืนยันรหัสผ่าน</label>
             <Input
             type="password"
-              defaultValue=""
-              placeholder="ยืนยันรหัสผ่าน"
+            placeholder="ยืนยันรหัสผ่าน"
+            name="conpass"
+             value={this.state.conpass}
+             defaultValue=""
+             onChange={this.handleChange}
               
             />
           </FormGroup>
@@ -201,9 +290,12 @@ class Adduser extends Component {
           <FormGroup>
             <label>ชื่อ</label>
             <Input
+              value={this.state.fname}
               defaultValue=""
+              onChange={this.handleChange}
               placeholder="ชื่อ"
               type="text"
+              name="fname"
             />
           </FormGroup>
         </Col>
@@ -212,6 +304,9 @@ class Adduser extends Component {
             <label>นามสกุล</label>
             <Input
               defaultValue=""
+              name="lname"
+              value={this.state.lname}
+              onChange={this.handleChange}
               placeholder="นามสกุล"
               type="text"
             />
@@ -225,6 +320,9 @@ class Adduser extends Component {
           <FormGroup>
             <label>เบอร์โทร</label>
             <Input
+              name="tel"
+              value={this.state.tel}
+              onChange={this.handleChange}
               defaultValue=""
               placeholder="เบอร์โทร"
               type="text"
@@ -235,7 +333,10 @@ class Adduser extends Component {
           <FormGroup>
             <label>อีเมล</label>
             <Input
+              name="email"
+              value={this.state.email}
               defaultValue=""
+              onChange={this.handleChange}
               placeholder="อีเมล"
               type="text"
             />
@@ -247,7 +348,7 @@ class Adduser extends Component {
         <Col className="pr-1" md="6">
           <FormGroup>
             <label>สำนักงาน ธ.ก.ส.</label>
-            <Input type="select" name="select" id="exampleSelect" onChange={this.onChange2}>
+            <Input type="select" name="select" id="exampleSelect" onChange={this.onChange2} defaultValue="">
               {this.state.probranch.map((p) => <option key={p.branch_pro_id} value={p.branch_pro_id}>{p.branch_pro_name}</option>)}        
             </Input>
           </FormGroup>
@@ -255,7 +356,7 @@ class Adduser extends Component {
         <Col className="pl-1" md="6">
           <FormGroup>
             <label>สาขา ธ.ก.ส.</label>
-            <Input type="select" name="select" id="exampleSelect" >
+            <Input type="select" name="ubranch_id" id="exampleSelect" onChange={this.handleChange}>
               {this.state.branch.map((p) => <option key={p.branch_id} value={p.branch_id}>{p.branch_name}</option>)}     
             </Input>
           </FormGroup>
@@ -268,8 +369,11 @@ class Adduser extends Component {
             <label>รหัสผ่าน</label>
             <Input
             type="password"
-              defaultValue=""
-              placeholder="รหัสผ่าน"
+            placeholder="รหัสผ่าน"
+            name="password"
+             value={this.state.password}
+             defaultValue=""
+             onChange={this.handleChange}
               
             />
           </FormGroup>
@@ -279,8 +383,11 @@ class Adduser extends Component {
             <label>ยืนยันรหัสผ่าน</label>
             <Input
             type="password"
-              defaultValue=""
-              placeholder="ยืนยันรหัสผ่าน"
+            placeholder="ยืนยันรหัสผ่าน"
+            name="conpass"
+             value={this.state.conpass}
+             defaultValue=""
+             onChange={this.handleChange}
               
             />
           </FormGroup>
@@ -352,9 +459,9 @@ class Adduser extends Component {
                         <FormGroup>
                           <label>สิทธิ์ผู้ใช้งาน</label>
                           <Input type="select" name="select" id="exampleSelect" onChange={this.onChange} >
-                            <option value='A'>ผู้ดูแลระบบ</option>
-                            <option value='B'>เจ้าหน้าที่</option>
-                            <option value='A'>ผู้ใช้งานทั่วไป</option>
+                            <option value='1'>ผู้ดูแลระบบ</option>
+                            <option value='2'>เจ้าหน้าที่</option>
+                            <option value='3'>ผู้ใช้งานทั่วไป</option>
                             
                         </Input>
                         </FormGroup>
@@ -379,7 +486,7 @@ class Adduser extends Component {
           ยกเลิก
         </Button>
 
-        <Button  onClick={() => this.handleClickClose()}  color='success'>
+        <Button  onClick={() => this.handleSubmit()}  color='success'>
          บันทึก
         </Button>
 

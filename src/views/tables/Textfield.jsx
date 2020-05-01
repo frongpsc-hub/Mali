@@ -52,7 +52,8 @@ export default class FormPropsTextFields extends Component {
         warranty_postalcode: "",
         warranty_status: "",
         warranty_timestamp: "",
-        warranty_tgiano:""
+        warranty_tgiano:"",
+        results:""
       }
       this.handleChange=this.handleChange.bind(this);
     }
@@ -61,7 +62,7 @@ export default class FormPropsTextFields extends Component {
       // this.getAcceptedcount();
    
       this.getwarrantyinfo();
-      this.props.print("kuy")
+      
   
   }
 
@@ -102,13 +103,18 @@ export default class FormPropsTextFields extends Component {
     });
     if(e.target.value === 'ยืนยันว่าพื้นที่เสียหายไม่อยู่ในเขตประกันภัย'){
       this.setState({
-        disabled: 'disabled'
+        disabled: 'disabled',
+        results:'1'
       });
+      this.props.print("1")
+      console.log("1")
     }
     else{
       this.setState({
-        disabled: ''
+        disabled: '',
+        results:'2'
       });
+      this.props.print("2")
     }
   }
 
@@ -273,7 +279,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="วันที่เกิดภัยในแปลงของท่าน"
           placeholder="วันที่เกิดภัยในแปลงของท่าน"
-          defaultValue="Hello World"
+          defaultValue="22/12/2019"
           readOnly={true}
         />
         </FormGroup>
@@ -283,7 +289,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="วันที่เพาะปลูกตามที่ระบุในทะเบียนเกษตรกร"
           placeholder="วันที่เพาะปลูกตามที่ระบุในทะเบียนเกษตรกร"
-          defaultValue="Hello World"
+          defaultValue="25/05/2019"
           readOnly={true}
         />
         </FormGroup>
@@ -293,7 +299,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="วันที่แปลงท่านได้รับความเสียหายจนไม่มีผลผลิต"
           placeholder="วันที่แปลงท่านได้รับความเสียหายจนไม่มีผลผลิต"
-          defaultValue="Hello World"
+          defaultValue="04/03/2020"
           readOnly={true}
         />
         </FormGroup>
@@ -310,7 +316,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="อำเภอ"
           placeholder="อำเภอ"
-          defaultValue="Hello World"
+          defaultValue="อ.ลำลูกกา"
           readOnly={true}
         />
         </FormGroup>
@@ -320,7 +326,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="จังหวัด"
           placeholder="จังหวัด"
-          defaultValue="Hello World"
+          defaultValue="ปทุมธานี"
           readOnly={true}
         />
         </FormGroup>
@@ -330,7 +336,7 @@ export default class FormPropsTextFields extends Component {
         <Input
           name="รหัสไปรษณีย์"
           placeholder="รหัสไปรษณีย์"
-          defaultValue="Hello World"
+          defaultValue="10121"
           readOnly={true}
         />
         </FormGroup>

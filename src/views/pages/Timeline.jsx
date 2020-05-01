@@ -102,13 +102,13 @@ getAppUserinfo = () => {
 getWebUserinfo = () => {
   axios.get(`http://localhost:3001/api/v1/managewebusers`)
       .then(res => {
-      console.log(res.data.Data)
+      //console.log(res.data.Data)
       const product2 = res.data.Data.map(p => {
         p.details = <div><Viewuser uid={p.uid}/></div>
         return p
       })
       this.setState({ products2: product2 });
-      console.log(this.state.products2)
+      //console.log(this.state.products2)
       })
 }
 
@@ -133,6 +133,10 @@ getWebUserinfo = () => {
   };
   afterSave = () => {};
   render() {
+    const options = [{
+      dataField: "uid",  //default sort column name
+      order: "asc",  //default sort order
+    }];
     const { products,products2 } = this.state;
     const { shownumOp } = this.state;
     const { completeInf } = this.state;
@@ -297,6 +301,7 @@ getWebUserinfo = () => {
         },
         editor: {
           type: Type.SELECT,
+          
           options: [
             { value: "เปิดใช้งาน", label: "เปิดใช้งาน" },
             { value: "ปิดใช้งาน", label: "ปิดใช้งาน" },
@@ -362,6 +367,7 @@ getWebUserinfo = () => {
                   <hr />
                   <BootstrapTable
                     rowStyle={rowStyle2}
+                    defaultSorted={options}
                     onDataSizeChange={this.handleDataChange}
                     striped
                     pagination={paginationFactory()}
@@ -458,6 +464,7 @@ getWebUserinfo = () => {
                   <hr />
                   <BootstrapTable
                     rowStyle={rowStyle2}
+                    defaultSorted={options}
                     onDataSizeChange={this.handleDataChange}
                     striped
                     pagination={paginationFactory()}

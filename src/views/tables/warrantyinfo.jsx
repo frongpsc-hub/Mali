@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import FormPropsTextFields from './Textfield';
 import modalStyle from "assets/jss/material-kit-react/modalStyle.jsx";
 import Close from "@material-ui/icons/Close";
+import { Label } from 'reactstrap';
 
 const styles = (theme) => ({
   root: {
@@ -44,10 +45,21 @@ class CustomizedDialogs extends Component {
 
     this.state = {
       showModal:false,
+      results:"",
+      status:""
       
     }
     this.handleClickOpen=this.handleClickOpen.bind(this)
     this.handleClickClose=this.handleClickClose.bind(this)
+    this.handleSubmit=this.handleSubmit.bind(this)
+  }
+  componentDidMount(){
+    if(this.props.status_name =="ยืนยัน"){
+      this.setState({status:"1"})
+    }
+    else if(this.props.status_name =="ไม่ยืนยัน"){
+      this.setState({status:"2"})
+    }
   }
     handleClickOpen = () =>{
       this.setState({
@@ -57,12 +69,54 @@ class CustomizedDialogs extends Component {
       
     handleClickClose = () =>{
       this.setState({
-        showModal:false
+        showModal:false,
+
+      })
+    }
+    handleSubmit = () =>{
+      const datar = {warranty_id:this.props.uid,warranty_status:this.state.results
+                    }
+        axios({
+          method: 'post',
+          url: 'http://localhost:3001/api/v1/editwarrantyisinarea',
+          data: datar
+      })
+      console.log(datar)
+      this.setState({
+        showModal:false,
       })
     }
     
   render(){
-    const { classes } = this.props;
+    let form2;
+    let form3;
+    console.log(this.props.status_name)
+    if (this.props.status =="ยืนยัน")
+    {
+      
+      form2 =
+      
+      <ColorButton  variant="contained" >
+            ยืนยัน
+      </ColorButton>
+      form3 =
+      <div>#ยืนยันโดย น้องมะลิซ้อน  ประกันวินาศภัย เบอร์ติดต่อ 080-123-4567  ณ วันที่ 30 มีนาคม 2563</div>
+      }
+
+
+    else if (this.props.status =="ไม่ยืนยัน")
+    {
+      
+      form2 =
+      <Button autoFocus onClick={() => this.handleClickClose()} variant="contained" color="secondary">
+            ไม่ยืนยัน
+      </Button>
+      form3 =
+      <div>#ยืนยันโดย น้องมะลิซ้อน  ประกันวินาศภัย เบอร์ติดต่อ 080-123-4567  ณ วันที่ 30 มีนาคม 2563</div>
+      }
+
+    const form =<FormPropsTextFields uid={this.props.uid} print={(eiei)=>this.setState({results:(eiei)})}/>;
+
     const DialogTitle = withStyles(styles)((props) => {
       const { children, classes, onClose, ...other } = props;
       return (
@@ -93,22 +147,24 @@ class CustomizedDialogs extends Component {
           id="customized-dialog-title" 
           onClose={this.handleClickClose}
           >
-          คำร้องลำดับที่ {this.props.uid}
-               
+          คำร้องลำดับที่ ({this.props.uid})
+          {form2}
+          {form3}
         </DialogTitle>
+        
         <DialogContent dividers>
         
-          <FormPropsTextFields uid={this.props.uid} print={(eiei)=>console.log(eiei)}/>
+          {form}
         
         </DialogContent>
         <DialogActions>
       
-          <ColorButton autoFocus onClick={this.handleClickClose} variant="contained" >
-            พื้นที่ประสบภัย
+          <ColorButton autoFocus onClick={() =>this.handleSubmit()} variant="contained" >
+            ส่งข้อมูล
           </ColorButton>
      
           <Button autoFocus onClick={() => this.handleClickClose()} variant="contained" color="secondary">
-            ไม่เป็นพื้นที่ประสบภัย
+            ปิด
           </Button>
         </DialogActions>
       </Dialog>

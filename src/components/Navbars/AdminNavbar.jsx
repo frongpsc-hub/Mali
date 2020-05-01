@@ -14,6 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
 import routes from "routes.js";
 import React from "react";
 import classnames from "classnames";
@@ -202,13 +203,13 @@ class AdminNavbar extends React.Component {
                       ข้อมูลผู้ใช้งาน
                     </DropdownItem>
                     </NavLink>
+                    <NavLink to="/auth/login">
                     <DropdownItem
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
+                      
                     >
                       ออกจากระบบ
                     </DropdownItem>
-                    
+                    </NavLink>
                   </DropdownMenu>
                 </UncontrolledDropdown>
                

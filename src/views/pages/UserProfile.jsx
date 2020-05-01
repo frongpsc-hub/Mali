@@ -15,7 +15,7 @@
 
 */
 import React from "react";
-
+import avatar from "assets/img/faces/ayo-ogunseinde-2.jpg";
 // reactstrap components
 import {
   Button,
@@ -46,7 +46,7 @@ class UserProfile extends React.Component {
                       <img
                         alt="..."
                         className="avatar border-gray"
-                        src={require("assets/img/mike.jpg")}
+                        src={avatar}
                       />
                       <h5 className="title"></h5>
                     

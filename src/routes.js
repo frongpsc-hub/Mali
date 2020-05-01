@@ -171,6 +171,7 @@ const routes = [
     icon: "nc-icon nc-support-17",
     state: "mapsCollapse",
     component: คำถามที่พบบ่อย
+    
     /*views: [
       {
         path: "/google-maps",
@@ -207,6 +208,13 @@ const routes = [
     icon: "nc-icon nc-email-85",
    
   },
+  {
+    path: "/login",
+    name: "",
+
+    component: Login,
+    layout: "/auth"
+  }
   // {
   //   path: "/calendar",
   //   name: "Calendar",
