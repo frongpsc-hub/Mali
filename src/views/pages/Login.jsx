@@ -14,7 +14,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import axios from "axios"
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { NavLink } from "react-router-dom";
 import logo from "assets/img/Artboard 15.png";
 // reactstrap components
@@ -36,7 +38,54 @@ import {
   Row
 } from "reactstrap";
 
-class Login extends React.Component {
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      position : "",
+      username:"",
+      password:"",
+      orgid:"0",
+      link:"",
+      
+
+    }
+    this.handleClick=this.handleClick.bind(this)
+    this.handleChange=this.handleChange.bind(this)
+  }
+  handleClick = () =>{
+    const datar = {email:this.state.email,passwd:this.state.password
+    }
+
+        axios({
+        method: 'post',
+        url: 'http://localhost:3001/api/v1/login',
+        data: datar
+      })
+      .then(res => {
+        console.log(res.data.data[0])
+        if(res.data.code == "200"){
+          this.setState({
+            orgid:'1',
+            status: "Online"
+           
+          })
+      console.log(this.state.orgid)
+        }
+      })
+
+  }
+  handleChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState({
+      [name]: value
+    })  
+
+    console.log(this.state.email)
+    
+  }
   componentDidMount() {
     document.body.classList.toggle("login-page");
   }
@@ -44,6 +93,15 @@ class Login extends React.Component {
     document.body.classList.toggle("login-page");
   }
   render() {
+
+    console.log(this.state.orgid)
+    if(this.state.status === 'Online'){
+
+      return(
+        <Redirect to="/admin/Dashboard" />
+      );
+
+  }
     return (
       <div className="login-page">
         <Container>
@@ -63,7 +121,12 @@ class Login extends React.Component {
                           <i className="nc-icon nc-single-02" />
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="Email" type="text" />
+                      <Input 
+                      name="email"
+                      value={this.state.email}
+                      placeholder="Email" 
+                      type="text" 
+                      onChange={this.handleChange}/>
                     </InputGroup>
                     <InputGroup>
                       <InputGroupAddon addonType="prepend">
@@ -72,32 +135,34 @@ class Login extends React.Component {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
+                        name="password"
+                        value={this.state.password}
                         placeholder="Password"
                         type="password"
                         autoComplete="off"
+                        onChange={this.handleChange}
                       />
                     </InputGroup>
                    
                    
                           
-                          <NavLink to="/admin/user-profile" className="nav-link" >
+                          <NavLink to="" className="nav-link" >
                            ลืมรหัสผ่าน?
                           </NavLink>
                           
                         
                   </CardBody>
                   <CardFooter>
-                  <NavLink to="/admin/dashboard">
+                  
                     <Button
                       block
                       className="btn-round mb-3"
                       color="success"
-                      
-                      
+                      onClick={() => this.handleClick()}
                     >
                       เข้าสู่ระบบ
                     </Button>
-                    </NavLink>
+                   
                   </CardFooter>
                 </Card>
               </Form>

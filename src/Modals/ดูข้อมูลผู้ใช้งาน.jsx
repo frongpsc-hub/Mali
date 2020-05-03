@@ -68,8 +68,7 @@ class Viewuser extends Component {
     this.handleChange=this.handleChange.bind(this)
     this.handleSubmit=this.handleSubmit.bind(this)
   }
-  componentDidMount() {
-}
+
     onChange(event){
     this.setState({
       position : event.target.value
@@ -103,7 +102,7 @@ class Viewuser extends Component {
           role_name:res.data.Data[0].role_name
         })
         //console.log(res.data.Data[0].role_name)
-        //console.log(this.state.position)
+        console.log(this.state.position)
         
         
       }
